@@ -293,15 +293,12 @@ function Index() {
 
                         {/* Navigation Links */}
                         <div className='hidden md:flex items-center space-x-8'>
-                            <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
+                            <a href='#features' className='text-[15px] text-gray-600 hover:text-[#11ba82] transition-colors font-semibold'>
                                 Features
-                            </Link>
-                            <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
+                            </a>
+                            <a href='#how-it-works' className='text-[15px] text-gray-600 hover:text-[#11ba82] transition-colors font-semibold'>
                                 How It Works
-                            </Link>
-                            <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
-                                About
-                            </Link>
+                            </a>
                         </div>
 
                         {/* Auth Buttons */}
@@ -529,7 +526,7 @@ function Index() {
             </div>
 
             {/* Features Section */}
-            <div className='py-24 bg-white'>
+            <div id='features' className='py-24 bg-white scroll-mt-16'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <div className='text-center mb-20'>
                         <span className='text-[#11ba82] font-semibold text-sm tracking-wider uppercase mb-3 block'>Features</span>
@@ -569,7 +566,7 @@ function Index() {
             </div>
 
             {/* How It Works Section */}
-            <div className='py-24 bg-white'>
+            <div id='how-it-works' className='py-24 bg-white scroll-mt-16'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <div className='text-center mb-20'>
                         <span className='text-[#11ba82] font-semibold text-sm tracking-wider uppercase mb-3 block'>How It Works</span>
