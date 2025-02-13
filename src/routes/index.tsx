@@ -9,7 +9,6 @@ import {
     Bell,
     BookOpen,
     Calendar,
-    ChevronDown,
     ChevronLeft,
     ChevronRight,
     FileText,
@@ -62,7 +61,7 @@ const events: EventInput[] = [
         }
     },
     {
-        title: 'CS 202 Assignment Due',
+        title: 'CS 202 Assignment 3',
         start: getDateForCurrentWeek(1, '11:00'),
         backgroundColor: 'rgb(219 234 254)',
         borderColor: 'rgb(219 234 254)',
@@ -171,7 +170,7 @@ const events: EventInput[] = [
         }
     },
     {
-        title: 'PHYS 102 Assignment Due',
+        title: 'PHYS 102 Assignment 4',
         start: getDateForCurrentWeek(4, '12:30'),
         backgroundColor: 'rgb(255 237 213)',
         borderColor: 'rgb(255 237 213)',
@@ -219,7 +218,7 @@ const events: EventInput[] = [
         }
     },
     {
-        title: 'PSYC 101 Assignment Due',
+        title: 'PSYC 101 Assignment 3',
         start: getDateForCurrentWeek(5, '14:00'),
         backgroundColor: 'rgb(220 252 231)',
         borderColor: 'rgb(220 252 231)',
@@ -294,26 +293,14 @@ function Index() {
 
                         {/* Navigation Links */}
                         <div className='hidden md:flex items-center space-x-8'>
-                            <div className='flex items-center space-x-1'>
-                                <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
-                                    Features
-                                </Link>
-                                <ChevronDown className='w-4 h-4 text-gray-400' />
-                            </div>
+                            <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
+                                Features
+                            </Link>
                             <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
                                 How It Works
                             </Link>
                             <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
-                                Pricing
-                            </Link>
-                            <div className='flex items-center space-x-1'>
-                                <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
-                                    Integrations
-                                </Link>
-                                <ChevronDown className='w-4 h-4 text-gray-400' />
-                            </div>
-                            <Link to='/' className='text-[15px] text-gray-600 hover:text-gray-900 font-semibold'>
-                                Early Access
+                                About
                             </Link>
                         </div>
 
@@ -322,7 +309,7 @@ function Index() {
                             <Link
                                 to='/'
                                 className='bg-[#11ba82] text-[#fffffa] px-5 py-2 rounded-3xl text-[15px] font-semibold hover:bg-[#0ea371] transition-colors'>
-                                Get Started
+                                Try Demo
                             </Link>
                         </div>
                     </div>
@@ -352,7 +339,7 @@ function Index() {
                             </div>
                             <div className='space-y-0.5'>
                                 <p className='text-[13px] text-gray-900 font-semibold'>CS 202 Assignment 4</p>
-                                <p className='text-[11px] text-gray-500 font-medium'>Due Tomorrow • 11:59 PM<br />Binary Trees & Heaps</p>
+                                <p className='text-[11px] text-gray-500 font-medium'> Tomorrow • 11:59 PM<br />Binary Trees & Heaps</p>
                             </div>
                         </div>
                     </div>
@@ -364,12 +351,12 @@ function Index() {
                             <br />and less stressed
                         </h1>
                         <p className='text-[16px] leading-[1.6] text-[#171919]/70 mb-8 font-semibold'>
-                            Upload your course outlines and schedules—let our AI create a
+                            Upload your course outlines and schedules—our AI instantly creates a
                             <br />
-                            centralized, smart calendar for all your academic needs.
+                            smart calendar that syncs with your favorite calendar apps.
                         </p>
                         <button className='bg-[#11ba82] text-[#fffffa] px-8 py-3 rounded-3xl text-[16px] font-semibold hover:bg-[#0ea371] transition-colors'>
-                            Get Started For Free
+                            Try Interactive Demo
                         </button>
                     </div>
                 </div>
@@ -395,7 +382,7 @@ function Index() {
                                         <Lock className='w-3.5 h-3.5 text-gray-400' />
                                         <span className='text-[13px] text-gray-500 font-medium'>https://</span>
                                     </div>
-                                    <span className='text-[13px] text-gray-900'>{window.location.host}/calendar</span>
+                                    <span className='text-[13px] text-gray-500'>{window.location.host}/calendar</span>
                                 </div>
                             </div>
 
@@ -405,7 +392,7 @@ function Index() {
                         <div className='p-4 flex items-center justify-between bg-white/95 backdrop-blur-xl relative z-10'>
                             <div className='flex items-center gap-3'>
                                 <Calendar className='w-5 h-5 text-orange-500' />
-                                <h2 className='text-lg font-semibold text-[#171919]'>Academic Calendar</h2>
+                                <h2 className='text-lg font-semibold text-gray-900'>Ivy AI Dashboard</h2>
                             </div>
                             <div className='flex items-center gap-3'>
                                 <div className='p-2'>
@@ -540,6 +527,132 @@ function Index() {
                     </div>
                 </div>
             </div>
+
+            {/* Features Section */}
+            <div className='py-24 bg-white'>
+                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                    <div className='text-center mb-20'>
+                        <span className='text-[#11ba82] font-semibold text-sm tracking-wider uppercase mb-3 block'>Features</span>
+                        <h2 className='text-4xl font-bold text-[#171919] mb-4'>Your Academic Life, Intelligently Organized</h2>
+                        <div className='w-20 h-1.5 bg-[#11ba82] mx-auto rounded-full'></div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6'>
+                                <FileText className='w-6 h-6 text-orange-600' />
+                            </div>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>AI-Powered Syllabus Analysis</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Our advanced AI reads and understands your course outlines like a human would, automatically extracting key dates and requirements.
+                            </p>
+                        </div>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6'>
+                                <Bell className='w-6 h-6 text-orange-600' />
+                            </div>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>Smart Study Reminders</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Get intelligent notifications that adapt to your study patterns and help you stay ahead of deadlines.
+                            </p>
+                        </div>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6'>
+                                <Calendar className='w-6 h-6 text-orange-600' />
+                            </div>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>Universal Calendar Sync</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Seamlessly integrates with Google Calendar, Apple Calendar, and other popular platforms to keep you in sync everywhere.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* How It Works Section */}
+            <div className='py-24 bg-white'>
+                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                    <div className='text-center mb-20'>
+                        <span className='text-[#11ba82] font-semibold text-sm tracking-wider uppercase mb-3 block'>How It Works</span>
+                        <h2 className='text-4xl font-bold text-[#171919] mb-4'>Simple Steps to Academic Success</h2>
+                        <div className='w-20 h-1.5 bg-[#11ba82] mx-auto rounded-full'></div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-12'>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-16 h-16 bg-[#ba1511]/10 rounded-xl flex items-center justify-center mb-6'>
+                                <FileText className='w-8 h-8 text-[#ba1511]' />
+                            </div>
+                            <span className='bg-[#ba1511]/10 text-[#ba1511] text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4'>Step 1</span>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>Upload Your Syllabi</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Simply upload your course syllabi and materials. Our AI will automatically process and analyze them.
+                            </p>
+                        </div>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-16 h-16 bg-[#ba1511]/10 rounded-xl flex items-center justify-center mb-6'>
+                                <Calendar className='w-8 h-8 text-[#ba1511]' />
+                            </div>
+                            <span className='bg-[#ba1511]/10 text-[#ba1511] text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4'>Step 2</span>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>Review & Customize</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Check the automatically generated schedule and customize it to match your preferences.
+                            </p>
+                        </div>
+                        <div className='bg-white p-8 rounded-2xl shadow-sm'>
+                            <div className='w-16 h-16 bg-[#ba1511]/10 rounded-xl flex items-center justify-center mb-6'>
+                                <Monitor className='w-8 h-8 text-[#ba1511]' />
+                            </div>
+                            <span className='bg-[#ba1511]/10 text-[#ba1511] text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4'>Step 3</span>
+                            <h3 className='text-xl font-semibold text-[#171919] mb-3'>Stay Organized</h3>
+                            <p className='text-[#171919]/70 leading-relaxed'>
+                                Access your schedule anywhere and receive smart notifications for upcoming deadlines.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <footer className='bg-white text-[#171919] py-16 border-t border-gray-200'>
+                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-4 gap-12'>
+                        <div className='space-y-4'>
+                            <Link to='/' className='text-2xl font-bold block text-[#171919]'>
+                                Ivy AI
+                            </Link>
+                            <p className='text-gray-600 text-sm'>
+                                Empowering students with AI-driven organization tools for academic success.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className='text-lg font-semibold mb-4 text-[#171919]'>Product</h4>
+                            <ul className='space-y-2'>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Features</Link></li>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>How It Works</Link></li>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Early Access</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className='text-lg font-semibold mb-4 text-[#171919]'>Company</h4>
+                            <ul className='space-y-2'>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>About</Link></li>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Contact</Link></li>
+                                <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Privacy Policy</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className='text-lg font-semibold mb-4 text-[#171919]'>Connect</h4>
+                            <ul className='space-y-2'>
+                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Twitter</a></li>
+                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>LinkedIn</a></li>
+                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>GitHub</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className='mt-12 pt-8 border-t border-gray-200 text-center text-gray-600 text-sm'>
+                        <p>&copy; {new Date().getFullYear()} Ivy AI. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }
