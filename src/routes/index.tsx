@@ -611,7 +611,7 @@ function Index() {
             {/* Footer */}
             <footer className='bg-white text-[#171919] py-16 border-t border-gray-200'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                    <div className='grid grid-cols-1 md:grid-cols-4 gap-12'>
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-12'>
                         <div className='space-y-4'>
                             <Link to='/' className='text-2xl font-bold block text-[#171919]'>
                                 Ivy AI
@@ -636,13 +636,7 @@ function Index() {
                                 <li><Link to='/' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Privacy Policy</Link></li>
                             </ul>
                         </div>
-                        <div>
-                            <h4 className='text-lg font-semibold mb-4 text-[#171919]'>Connect</h4>
-                            <ul className='space-y-2'>
-                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Twitter</a></li>
-                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>LinkedIn</a></li>
-                            </ul>
-                        </div>
+                       
                     </div>
                     <div className='mt-12 pt-8 border-t border-gray-200 text-center text-gray-600 text-sm'>
                         <p>&copy; {new Date().getFullYear()} Ivy AI. All rights reserved.</p>
