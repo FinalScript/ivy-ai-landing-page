@@ -641,7 +641,6 @@ function Index() {
                             <ul className='space-y-2'>
                                 <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>Twitter</a></li>
                                 <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>LinkedIn</a></li>
-                                <li><a href='#' className='text-gray-600 hover:text-[#11ba82] transition-colors'>GitHub</a></li>
                             </ul>
                         </div>
                     </div>
