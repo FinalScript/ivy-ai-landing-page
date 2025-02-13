@@ -1,0 +1,133 @@
+/* Calendar Styles */
+.fc {
+    --fc-border-color: rgb(229 231 235 / 0.8);
+    --fc-page-bg-color: white;
+    --fc-neutral-bg-color: white;
+    --fc-today-bg-color: transparent;
+    --fc-now-indicator-color: rgb(168 85 247);
+}
+
+/* Remove default borders */
+.fc .fc-scrollgrid {
+    border: none !important;
+}
+
+.fc .fc-scrollgrid td:last-of-type {
+    border-right: none !important;
+}
+
+.fc .fc-scrollgrid-section-header td {
+    border-right: none !important;
+}
+
+/* Time slots styling */
+.fc .fc-timegrid-slot {
+    height: 50px !important;
+    border-bottom: 1px solid var(--fc-border-color) !important;
+}
+
+/* Event styling */
+.fc-event {
+    border: none !important;
+    background: none !important;
+    margin: 1px !important;
+}
+
+.fc-event-main-frame {
+    height: 100% !important;
+}
+
+.fc-event-time {
+    display: none !important;
+}
+
+/* Today column highlight */
+.fc .fc-day-today {
+    background: rgb(243 244 246) !important;
+}
+
+.fc .fc-day-today .fc-col-header-cell-cushion {
+    color: rgb(17 24 39) !important;
+    font-weight: 600 !important;
+}
+
+/* Header styling */
+.fc .fc-col-header {
+    background: white !important;
+}
+
+.fc .fc-col-header-cell {
+    padding: 8px 0 !important;
+    border-bottom: 1px solid rgb(229 231 235) !important;
+}
+
+/* Time labels */
+.fc .fc-timegrid-axis-cushion {
+    padding-left: 24px !important;
+    color: rgb(107 114 128) !important;
+}
+
+/* Grid styling */
+.fc .fc-timegrid-col.fc-day-today {
+    background: rgb(243 244 246) !important;
+}
+
+.fc .fc-timegrid-col {
+    background: white !important;
+}
+
+.fc .fc-timegrid-divider {
+    display: none !important;
+}
+
+/* Now indicator */
+.fc .fc-timegrid-now-indicator-line {
+    border-color: rgb(234 88 12) !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+    z-index: 100 !important;
+}
+
+.fc .fc-timegrid-now-indicator-arrow {
+    border-color: rgb(234 88 12) !important;
+    border-width: 6px !important;
+    z-index: 100 !important;
+}
+
+/* Hover effects */
+.fc-event:hover {
+    opacity: 0.9;
+}
+
+/* Custom scrollbar */
+.fc-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.fc-scroller::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+    background: rgb(229 231 235);
+    border-radius: 4px;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+    background: rgb(209 213 219);
+}
+
+/* Column borders */
+.fc .fc-timegrid-cols table {
+    border-right: 1px solid var(--fc-border-color) !important;
+}
+
+.fc .fc-timegrid-col {
+    border-left: 1px solid var(--fc-border-color) !important;
+}
+
+/* Remove last border */
+.fc .fc-timegrid-col:last-child {
+    border-right: none !important;
+} 
