@@ -38,8 +38,10 @@ const formatMonthYear = (date: Date) => {
 const getDateForCurrentWeek = (dayOfWeek: number, timeString: string) => {
     const date = new Date();
     const currentDay = date.getDay();
-    const daysToMonday = currentDay === 0 ? 1 : (1 - currentDay);
-    const daysToAdd = daysToMonday + (dayOfWeek - 1);
+    // Adjust for Sunday (0) to be treated as day 7, making Monday (1) the first day
+    const adjustedCurrentDay = currentDay === 0 ? 7 : currentDay;
+    // Calculate days to add based on the desired day (1=Monday, 7=Sunday)
+    const daysToAdd = dayOfWeek - adjustedCurrentDay;
     date.setDate(date.getDate() + daysToAdd);
     const [hours, minutes] = timeString.split(':');
     date.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
@@ -499,7 +501,7 @@ function Index() {
                                     meridiem: 'short'
                                 }}
                                 nowIndicator={false}
-                                initialDate={new Date()}
+                                initialDate={new Date('2025-03-24')}
                                 firstDay={1}
                                 slotDuration='00:30:00'
                                 slotLabelInterval='01:00'
