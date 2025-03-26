@@ -82,7 +82,7 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
   ];
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-50">
+    <section id="how-it-works" className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -153,15 +153,11 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
                     className="rounded-xl overflow-hidden shadow-xl border border-gray-200 bg-white"
                   >
                     {/* Placeholder for image */}
-                    <div className="aspect-[16/9] w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                    <div className="w-full bg-gray-100 flex items-center justify-center overflow-hidden" style={{ minHeight: index === 0 ? '400px' : '450px' }}>
                       <div className="w-full h-full bg-white">
                         {index === 0 && (
                           <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            {/* DEMO badge */}
-                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
-                              DEMO UI
-                            </div>
-                            <div className="border-2 border-dashed border-[#ec4899]/30 rounded-lg h-full flex flex-col items-center justify-center">
+                            <div className="border-2 border-dashed border-[#ec4899]/30 rounded-lg h-full min-h-[350px] flex flex-col items-center justify-center">
                               <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-[#ec4899] mb-3" />
                               <div className="text-center max-w-md mx-auto">
                                 <h4 className="text-lg sm:text-xl font-semibold text-[#ec4899] mb-1">Drop your syllabus files here</h4>
@@ -179,11 +175,78 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
                         
                         {index === 1 && (
                           <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            {/* DEMO badge */}
-                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
-                              DEMO UI
+                            {/* Mobile-specific view with just extracted classes */}
+                            <div className="md:hidden">
+                              {/* Calendar preview for mobile */}
+                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg bg-white overflow-hidden mb-4">
+                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10 flex justify-between items-center">
+                                  <h4 className="font-semibold text-[#a855f7]">March 2025</h4>
+                                  <div className="flex gap-2">
+                                    <button className="p-1 rounded hover:bg-[#a855f7]/10 cursor-default">
+                                      <Calendar className="w-4 h-4 text-[#a855f7]" />
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="p-3">
+                                  <div className="grid grid-cols-7 gap-1">
+                                    {['S','M','T','W','T','F','S'].map((day, i) => (
+                                      <div key={`day-${i}`} className="text-xs text-center font-semibold text-gray-500 py-1">
+                                        {day}
+                                      </div>
+                                    ))}
+                                    {Array.from({ length: 21 }).map((_, i) => (
+                                      <div 
+                                        key={i} 
+                                        className={`aspect-square flex flex-col items-center justify-center text-xs rounded-md 
+                                          ${i === 14 ? 'bg-[#a855f7] text-white' : i % 7 === 0 || i % 7 === 6 ? 'text-gray-400' : ''}`}
+                                      >
+                                        <span>{i + 1}</span>
+                                        {i === 14 && <div className="w-1 h-1 bg-white rounded-full mt-0.5"></div>}
+                                        {i === 7 && <div className="w-1 h-1 bg-[#ec4899] rounded-full mt-0.5"></div>}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {/* Extracted Classes only */}
+                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg bg-white overflow-hidden">
+                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10">
+                                  <h4 className="font-semibold text-[#a855f7]">Extracted Classes</h4>
+                                </div>
+                                <div className="p-4 space-y-4 h-full">
+                                  <div className="rounded-md bg-[#a855f7]/5 p-3 border-l-2 border-[#a855f7]">
+                                    <div className="font-semibold text-[#a855f7] text-sm">CS 101: Intro to Programming</div>
+                                    <div className="text-xs text-gray-600 mt-1">Prof. Johnson • MWF 9:00-10:30am</div>
+                                    <div className="mt-2 flex flex-wrap gap-1.5">
+                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">3 Assignments</span>
+                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">2 Exams</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="rounded-md bg-[#ec4899]/5 p-3 border-l-2 border-[#ec4899]">
+                                    <div className="font-semibold text-[#ec4899] text-sm">MATH 201: Calculus II</div>
+                                    <div className="text-xs text-gray-600 mt-1">Prof. Garcia • TR 11:00-12:30pm</div>
+                                    <div className="mt-2 flex flex-wrap gap-1.5">
+                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">4 Problem Sets</span>
+                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">3 Exams</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="rounded-md bg-[#11ba82]/5 p-3 border-l-2 border-[#11ba82]">
+                                    <div className="font-semibold text-[#11ba82] text-sm">PHYS 202: Mechanics</div>
+                                    <div className="text-xs text-gray-600 mt-1">Prof. Smith • MWF 1:00-2:30pm</div>
+                                    <div className="mt-2 flex flex-wrap gap-1.5">
+                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">5 Labs</span>
+                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">2 Exams</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                            
+                            {/* Desktop full view */}
+                            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
                               {/* Calendar side */}
                               <div className="border border-[#a855f7]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden">
                                 <div className="bg-[#a855f7]/10 px-4 py-3 flex justify-between items-center border-b border-[#a855f7]/10">
@@ -255,12 +318,52 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
                         
                         {index === 2 && (
                           <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            {/* DEMO badge */}
-                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
-                              DEMO UI
+                            {/* Mobile-specific view */}
+                            <div className="md:hidden">
+                              <div className="border border-[#11ba82]/20 shadow-sm rounded-lg bg-white overflow-hidden min-h-[350px]">
+                                <div className="bg-[#11ba82]/10 px-4 py-3 rounded-t-lg border-b border-[#11ba82]/10 flex justify-between items-center">
+                                  <h4 className="font-semibold text-[#11ba82]">Upcoming Deadlines</h4>
+                                </div>
+                                <div className="p-4 space-y-3">
+                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-[#11ba82]/5 border border-[#11ba82]/10">
+                                    <div className="p-2 bg-[#11ba82]/10 rounded-full">
+                                      <BellRing className="w-5 h-5 text-[#11ba82]" />
+                                    </div>
+                                    <div>
+                                      <div className="font-medium">PHYS 202 Quiz</div>
+                                      <div className="text-xs text-gray-600">Tomorrow</div>
+                                    </div>
+                                    <div className="ml-auto text-xs text-[#11ba82] font-medium bg-[#11ba82]/10 px-2 py-1 rounded-full">High Priority</div>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                                    <div className="p-2 bg-gray-100 rounded-full">
+                                      <FileText className="w-5 h-5 text-gray-500" />
+                                    </div>
+                                    <div>
+                                      <div className="font-medium">ECON 101 Paper</div>
+                                      <div className="text-xs text-gray-600">Due in 5 days</div>
+                                    </div>
+                                    <div className="ml-auto text-xs text-amber-600 font-medium bg-amber-50 px-2 py-1 rounded-full">Medium</div>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                                    <div className="p-2 bg-gray-100 rounded-full">
+                                      <BookOpen className="w-5 h-5 text-gray-500" />
+                                    </div>
+                                    <div>
+                                      <div className="font-medium">CS 202 Reading</div>
+                                      <div className="text-xs text-gray-600">Due next week - Not started</div>
+                                    </div>
+                                    <div className="ml-auto text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Low</div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="border border-[#11ba82]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden">
-                              <div className="bg-[#11ba82]/10 px-4 py-3 border-b border-[#11ba82]/10">
+                            
+                            {/* Desktop view */}
+                            <div className="hidden md:block">
+                              <div className="bg-[#11ba82]/10 px-4 py-3 rounded-t-lg mb-2 flex justify-between items-center">
                                 <h4 className="font-semibold text-[#11ba82]">Upcoming Deadlines</h4>
                               </div>
                               <div className="p-4 space-y-3">
@@ -321,12 +424,12 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
             className="relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 overflow-hidden font-medium text-white bg-gradient-to-r from-[#11ba82] via-[#0ea371] to-[#0d9868] rounded-full shadow-lg group"
           >
             <span className="relative text-base sm:text-lg font-semibold flex items-center gap-2 z-10">
-              Get Started Now
+              Try For Free
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />
             </span>
           </button>
           <p className="mt-3 sm:mt-4 text-sm text-gray-500">
-            No credit card required • Free for students
+            No credit card required
           </p>
         </motion.div>
       </div>

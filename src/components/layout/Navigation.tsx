@@ -7,6 +7,15 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
+  // Function to handle smooth scrolling to anchor
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 backdrop-blur-md z-50 transition-all duration-300 ${
       scrolled 
@@ -30,6 +39,7 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
           <div className="hidden md:flex items-center space-x-8">
             <motion.a
               href="#features"
+              onClick={(e) => scrollToSection(e, 'features')}
               className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
                 scrolled ? 'text-gray-600' : 'text-[#171919]'
               }`}
@@ -40,6 +50,7 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
             </motion.a>
             <motion.a
               href="#how-it-works"
+              onClick={(e) => scrollToSection(e, 'how-it-works')}
               className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
                 scrolled ? 'text-gray-600' : 'text-[#171919]'
               }`}
@@ -59,14 +70,14 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
               <Link
                 to="/"
                 className={`
-                  px-5 py-2 rounded-full text-[15px] font-semibold transition-all duration-300
+                  px-5 py-3.5 rounded-full text-[15px] font-semibold transition-all duration-300
                   ${scrolled 
                     ? 'bg-[#11ba82] text-[#fffffa] shadow-lg hover:shadow-xl hover:shadow-[#11ba82]/20' 
                     : 'bg-[#11ba82] text-[#fffffa] shadow-lg hover:shadow-xl hover:shadow-[#11ba82]/20'
                   }
                 `}
               >
-                Try Demo
+                Try For Free
               </Link>
             </motion.div>
           </div>

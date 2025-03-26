@@ -83,7 +83,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
   return (
-    <div className="relative overflow-hidden min-h-[90vh] sm:min-h-screen mb-8 sm:mb-10 lg:mb-16">
+    <div className="relative overflow-hidden min-h-[80vh] sm:min-h-screen mb-8 sm:mb-10 lg:mb-16">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -94,8 +94,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
       </div>
       
       {/* Text Content Section */}
-      <div className="relative z-10 py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 min-h-[70vh] xs:min-h-[75vh] md:min-h-[80vh] flex items-center justify-center">
-        <div className="w-full max-w-xs xs:max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto text-center px-3 xs:px-4 sm:px-6 md:px-8 py-6 xs:py-7 sm:py-8 md:py-10 rounded-lg md:rounded-xl bg-white/70 backdrop-blur-sm shadow-md sm:shadow-lg md:shadow-xl border border-white/20 scale-[0.9] xs:scale-[0.95] sm:scale-100">
+      <div className="relative z-10 py-6 xs:py-8 sm:py-12 md:py-16 lg:py-20 min-h-[60vh] xs:min-h-[65vh] md:min-h-[80vh] flex items-center justify-center">
+        <div className="w-full max-w-xs xs:max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto text-center px-3 xs:px-4 sm:px-6 md:px-8 py-4 xs:py-6 sm:py-8 md:py-10 rounded-lg md:rounded-xl bg-white/70 backdrop-blur-sm shadow-md sm:shadow-lg md:shadow-xl border border-white/20 scale-[0.9] xs:scale-[0.95] sm:scale-100">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
               className="bg-[#11ba82] text-[#fffffa] px-4 xs:px-5 sm:px-6 md:px-8 py-1.5 xs:py-2 sm:py-2.5 md:py-3 rounded-full text-[12px] xs:text-[14px] md:text-[16px] font-semibold hover:bg-[#0ea371] transition-all duration-300 shadow-md lg:shadow-lg transform hover:-translate-y-1"
               onClick={onTryDemoClick}
             >
-              Try Interactive Demo
+              Get Started
             </button>
           </motion.div>
         </div>
@@ -162,7 +162,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
       {featureCards.map((card, index) => (
         <motion.div 
           key={index}
-          className="absolute z-20 px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-md sm:shadow-lg text-[10px] xs:text-xs sm:text-sm font-semibold hidden md:flex"
+          className="absolute z-20 px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-md sm:shadow-lg text-[10px] xs:text-xs sm:text-sm font-semibold hidden lg:flex"
           style={{ 
             backgroundColor: card.color,
             color: "white",

@@ -68,7 +68,8 @@ const TestimonialsSection: React.FC = () => {
           className="h-full w-full object-contain object-left"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white sm:block hidden"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white sm:hidden"></div>
       </div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -98,7 +99,7 @@ const TestimonialsSection: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 scale-[0.9] sm:scale-95 md:scale-100 origin-top mx-auto max-w-md xs:max-w-lg sm:max-w-xl md:max-w-none"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 scale-[0.95] sm:scale-95 md:scale-100 origin-top mx-auto max-w-md xs:max-w-lg sm:max-w-xl md:max-w-none"
         >
           {testimonials.map((testimonial, index) => (
             <motion.div

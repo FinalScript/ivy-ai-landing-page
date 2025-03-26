@@ -57,7 +57,7 @@ function Index() {
       <TestimonialsSection />
 
       {/* Get Started Section */}
-      <GetStartedSection onTryClick={handleTryDemoClick} />
+      <GetStartedSection onGetStartedClick={handleTryDemoClick} />
 
       {/* Footer */}
       <Footer />

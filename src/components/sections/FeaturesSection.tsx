@@ -1,8 +1,65 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { CheckCircle2, Bell, List } from "lucide-react";
+import { Bell, List, ArrowRight, Calculator } from "lucide-react";
 
-const FeaturesSection: React.FC = () => {
+interface FeaturesSectionProps {
+  onExploreClick?: () => void;
+}
+
+// Define interfaces for our data structures
+interface Assignment {
+  name: string;
+  weight: number;
+  completed: boolean;
+}
+
+interface GradeData {
+  targetGrade: number;
+  currentGrade: number;
+  completedWeight: number;
+  assignments: Assignment[];
+}
+
+interface CalculationResult {
+  averageNeeded: number;
+  assignmentNeeds: Record<string, number>;
+  message: string | null;
+}
+
+// Sample grade data that would normally come from a real student's data
+const sampleGradeData: GradeData = {
+  targetGrade: 90, // Target grade of 90%
+  currentGrade: 80, // Current grade of 80%
+  completedWeight: 0.70, // 70% of total grade has been completed
+  assignments: [
+    { name: "Assignment 3", weight: 0.10, completed: false },
+    { name: "Final Project", weight: 0.20, completed: false },
+    // Total future weight: 0.30 (30%)
+  ]
+};
+
+// Simplified calculation that returns hardcoded values as specified
+const calculateNeededScores = (): CalculationResult => {
+  // Hardcoded average needed for display purposes
+  const averageNeeded = 67; // This is an approximate average of 100% and 50%
+  
+  // Hardcoded message
+  const message = null; // No message needed since we're hardcoding the values
+  
+  // Hardcoded assignment needs according to user specification
+  const assignmentNeeds: Record<string, number> = {
+    "Assignment 3": 100, // 100% needed on Assignment 3
+    "Final Project": 50   // 50% needed on Final Project
+  };
+  
+  return {
+    averageNeeded,
+    assignmentNeeds,
+    message
+  };
+};
+
+const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => {
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
   const [animationKey, setAnimationKey] = useState(0); // Add state to force re-render of progress bars
   const sectionRef = useRef(null);
@@ -76,9 +133,13 @@ const FeaturesSection: React.FC = () => {
 
   // Progress bar animation duration (in milliseconds)
   const progressDuration = 6000;
+  
+  // Calculate needed scores using our utility function
+  const { averageNeeded, assignmentNeeds, message } = calculateNeededScores();
 
   return (
     <section 
+      id="features"
       ref={sectionRef}
       className="py-10 sm:py-12 md:py-16 lg:py-20 bg-gray-50 relative overflow-hidden"
     >
@@ -231,7 +292,7 @@ const FeaturesSection: React.FC = () => {
                         : "bg-gray-100 text-gray-500"
                     }`}
                   >
-                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
                     <h3 className="text-base xs:text-lg sm:text-xl font-semibold mb-1 sm:mb-2">
@@ -423,7 +484,7 @@ const FeaturesSection: React.FC = () => {
                           </p>
                           <div className="mt-1.5 sm:mt-2 text-[10px] xs:text-xs text-blue-900 font-medium">
                             2 hours ago
-                          </div>
+                          </div>82
                         </div>
                       </motion.div>
 
@@ -514,13 +575,13 @@ const FeaturesSection: React.FC = () => {
                             Current Grade
                           </h4>
                           <span className="text-base xs:text-lg sm:text-xl font-bold text-green-600">
-                            88%
+                            80%
                           </span>
                         </div>
                         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: "0%" }}
-                            animate={{ width: "88%" }}
+                            animate={{ width: "80%" }}
                             transition={{ duration: 1.5, delay: 0.3 }}
                             className="h-full bg-green-500"
                           />
@@ -540,27 +601,34 @@ const FeaturesSection: React.FC = () => {
                         className="bg-blue-50 p-3 sm:p-4 rounded-lg border border-blue-100"
                       >
                         <h4 className="text-xs xs:text-sm sm:text-base font-semibold text-blue-800 mb-2 sm:mb-3">
-                          Upcoming Assignments
+                          Scores Needed for Target ({sampleGradeData.targetGrade}%)
                         </h4>
                         
+                        {/* Show message if target is unreachable or already achieved */}
+                        {message && (
+                          <div className="mb-2 p-1.5 bg-yellow-100 rounded text-[10px] xs:text-xs sm:text-sm text-yellow-800">
+                            {message}
+                          </div>
+                        )}
+                        
+                        {/* Show average needed across all assignments */}
+                        <div className="mb-3 p-2 bg-blue-100 rounded">
+                          <p className="text-xs xs:text-sm text-center font-semibold text-blue-900">
+                            Need to average ~{Math.round(averageNeeded)}% on remaining assignments
+                          </p>
+                        </div>
+                        
                         <div className="space-y-2 sm:space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className="text-[10px] xs:text-xs sm:text-sm text-blue-800">
-                              Assignment 3 (30%)
-                            </span>
-                            <span className="text-[10px] xs:text-xs sm:text-sm font-semibold text-blue-800">
-                              Need: 85%+
-                            </span>
-                          </div>
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-[10px] xs:text-xs sm:text-sm text-blue-800">
-                              Final Project (40%)
-                            </span>
-                            <span className="text-[10px] xs:text-xs sm:text-sm font-semibold text-blue-800">
-                              Need: 92%+
-                            </span>
-                          </div>
+                          {sampleGradeData.assignments.map((assignment, index) => (
+                            <div key={index} className="flex justify-between items-center">
+                              <span className="text-[10px] xs:text-xs sm:text-sm text-blue-800">
+                                {assignment.name} ({(assignment.weight * 100)}% of grade)
+                              </span>
+                              <span className="text-[10px] xs:text-xs sm:text-sm font-semibold text-blue-800">
+                                Need: {Math.round(assignmentNeeds[assignment.name])}%
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </motion.div>
 
@@ -575,9 +643,9 @@ const FeaturesSection: React.FC = () => {
                           AI Recommendation
                         </h4>
                         <p className="text-[10px] xs:text-xs sm:text-sm text-green-700">
-                          To achieve your target grade of A-, focus on the final project. 
-                          Based on your performance in similar assignments, you'll 
-                          need approximately 15 hours of focused work on the project.
+                          To reach your target grade of {sampleGradeData.targetGrade}% from your current {sampleGradeData.currentGrade}%, 
+                          you should aim for 100% on Assignment 3 and at least 50% on the Final Project.
+                          This strategy prioritizes the smaller assignment first, which is a practical approach to grade improvement.
                         </p>
                       </motion.div>
                     </div>
@@ -587,6 +655,22 @@ const FeaturesSection: React.FC = () => {
             </div>
           </div>
         </div>
+        
+        {/* Add 'Try For Free' button at the bottom of the section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="text-center mt-10 sm:mt-12 md:mt-16"
+        >
+          <button
+            onClick={onExploreClick}
+            className="bg-[#11ba82] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-[#0ea371] transition-all duration-300 shadow-md flex items-center gap-2 mx-auto"
+          >
+            Try For Free
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
+        </motion.div>
       </div>
     </section>
   );
