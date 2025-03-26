@@ -149,7 +149,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <button
-              className="bg-[#11ba82] text-[#fffffa] px-4 xs:px-5 sm:px-6 md:px-8 py-1.5 xs:py-2 sm:py-2.5 md:py-3 rounded-full text-[12px] xs:text-[14px] md:text-[16px] font-semibold hover:bg-[#0ea371] transition-all duration-300 shadow-md lg:shadow-lg hover:shadow-xl hover:shadow-[#11ba82]/20 transform hover:-translate-y-1"
+              className="bg-[#11ba82] text-[#fffffa] px-4 xs:px-5 sm:px-6 md:px-8 py-1.5 xs:py-2 sm:py-2.5 md:py-3 rounded-full text-[12px] xs:text-[14px] md:text-[16px] font-semibold hover:bg-[#0ea371] transition-all duration-300 shadow-md lg:shadow-lg transform hover:-translate-y-1"
               onClick={onTryDemoClick}
             >
               Try Interactive Demo

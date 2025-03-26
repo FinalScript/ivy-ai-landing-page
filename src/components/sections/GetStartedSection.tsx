@@ -34,6 +34,20 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
     },
   };
 
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 300,
+        delay: 0.1,
+      },
+    },
+  };
+
   const steps = [
     {
       number: "01",
@@ -41,9 +55,9 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
       description: "Drag & drop your course materials - our AI extracts all critical deadlines automatically",
       icon: <FileText className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#ec4899]" />,
       illustration: <Upload className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#ec4899]" />,
-      bgGradient: "from-[#ec4899] to-[#f29c86]",
-      lightBg: "from-[#fbe7d5]/30 to-[#fcf1eb]/50",
-      borderColor: "border-[#fbe7d5]/20"
+      color: "#ec4899",
+      image: "/upload-syllabi.png",
+      alt: "Syllabus upload interface showing drag & drop area"
     },
     {
       number: "02",
@@ -51,9 +65,9 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
       description: "Confirm extracted dates and adjust your personalized academic calendar",
       icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#a855f7]" />,
       illustration: <Calendar className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#a855f7]" />,
-      bgGradient: "from-[#a855f7] to-[#8b5cf6]",
-      lightBg: "from-[#e1d3f0]/30 to-[#f1ecfa]/50",
-      borderColor: "border-[#e1d3f0]/20"
+      color: "#a855f7",
+      image: "/calendar-view.png",
+      alt: "Calendar interface showing academic schedule with deadlines"
     },
     {
       number: "03",
@@ -61,26 +75,21 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
       description: "Get smart reminders and visualize your semester with AI-optimized scheduling",
       icon: <BellRing className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#11ba82]" />,
       illustration: <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#11ba82]" />,
-      bgGradient: "from-[#11ba82] to-[#0ea371]",
-      lightBg: "from-[#d2f5e8]/30 to-[#e7faf3]/50",
-      borderColor: "border-[#d2f5e8]/20"
+      color: "#11ba82",
+      image: "/notifications-view.png",
+      alt: "Notification interface showing smart reminders and progress tracking"
     }
   ];
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gradient-to-b from-white via-[#faf6f2]/30 to-[#f0f9f5]/40">
-      {/* Background gradient */}
-      <div className="absolute -top-40 -right-40 w-72 h-72 md:w-96 md:h-96 bg-[#11ba82]/10 rounded-full blur-[80px] md:blur-[100px]"></div>
-      <div className="absolute -bottom-40 -left-40 w-72 h-72 md:w-96 md:h-96 bg-[#d6bce6]/20 rounded-full blur-[80px] md:blur-[100px]"></div>
-      <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-[#f8d6bc]/10 rounded-full blur-[70px]"></div>
-      
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 sm:mb-10 md:mb-12"
+          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
         >
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
             How Ivy AI <span className="text-[#11ba82]">Works</span>
@@ -96,57 +105,208 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="relative pb-4 sm:pb-6"
+          className="space-y-16 sm:space-y-24 md:space-y-32 relative"
         >
-          {/* Timeline vertical line */}
-          <div className="absolute left-[22px] sm:left-[30px] md:left-[38px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#ec4899] via-[#a855f7] to-[#11ba82]"></div>
+          {/* Main Timeline Line */}
+          <div className="absolute left-0 md:left-[38px] top-0 bottom-0 w-px bg-gray-200 hidden md:block"></div>
           
-          {/* Steps */}
-          <div className="space-y-8 sm:space-y-12 md:space-y-16 relative">
-            {steps.map((step, index) => (
-              <motion.div 
-                key={index}
-                variants={stepVariants}
-                className="flex items-start gap-4 sm:gap-6 md:gap-8"
-              >
-                {/* Step number circle */}
-                <div className={`relative z-10 flex-shrink-0 w-11 h-11 sm:w-14 sm:h-14 md:w-18 md:h-18 rounded-full bg-gradient-to-br ${step.bgGradient} flex items-center justify-center shadow-lg`}>
-                  <span className="text-white text-xs sm:text-sm md:text-base font-bold">{step.number}</span>
-                  
-                  {/* Decorative circles */}
-                  <motion.div 
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.5 + index * 0.2, duration: 0.4 }}
-                    className={`absolute -left-3 -top-3 w-4 h-4 rounded-full opacity-40 blur-[1px] bg-gradient-to-br ${step.bgGradient}`}
-                  ></motion.div>
+          {steps.map((step, index) => (
+            <div key={index} className="relative">
+              {/* Step indicator */}
+              <div className="flex flex-col md:flex-row items-start">
+                {/* Left side with step number - only visible on md and larger */}
+                <div className="hidden md:flex flex-col items-center relative z-20 mr-10">
+                  <div className="w-[76px] h-[76px] rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                    <span className="text-2xl font-bold" style={{ color: step.color }}>{step.number}</span>
+                  </div>
                 </div>
                 
-                {/* Content card */}
-                <motion.div 
-                  className={`flex-1 bg-white/90 backdrop-blur-sm rounded-xl border ${step.borderColor} shadow-lg p-4 sm:p-5 md:p-6 flex justify-between items-center gap-4 overflow-hidden`}
-                  whileHover={{ y: -3, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {/* Content */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                      {step.icon}
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">{step.title}</h3>
+                {/* Right side with content and screenshot */}
+                <div className="flex-1">
+                  <motion.div 
+                    variants={stepVariants}
+                    className="mb-6 sm:mb-8"
+                  >
+                    {/* Mobile step indicator - only visible below md breakpoint */}
+                    <div className="flex items-center mb-4 md:hidden">
+                      <div className="w-[50px] h-[50px] rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center mr-3">
+                        <span className="text-xl font-bold" style={{ color: step.color }}>{step.number}</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold">
+                        {step.title}
+                      </h3>
                     </div>
-                    <p className="text-sm sm:text-base text-gray-600">
+                    
+                    {/* Desktop heading - only visible on md and larger */}
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 hidden md:block">
+                      {step.title}
+                    </h3>
+                    
+                    <p className="text-sm sm:text-base md:text-lg text-gray-700 max-w-2xl">
                       {step.description}
                     </p>
-                  </div>
+                  </motion.div>
                   
-                  {/* Illustration */}
-                  <div className={`hidden sm:flex w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br ${step.lightBg} flex-shrink-0 items-center justify-center`}>
-                    {step.illustration}
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+                  {/* App screenshot/mockup */}
+                  <motion.div 
+                    variants={imageVariants}
+                    className="rounded-xl overflow-hidden shadow-xl border border-gray-200 bg-white"
+                  >
+                    {/* Placeholder for image */}
+                    <div className="aspect-[16/9] w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <div className="w-full h-full bg-white">
+                        {index === 0 && (
+                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
+                            {/* DEMO badge */}
+                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
+                              DEMO UI
+                            </div>
+                            <div className="border-2 border-dashed border-[#ec4899]/30 rounded-lg h-full flex flex-col items-center justify-center">
+                              <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-[#ec4899] mb-3" />
+                              <div className="text-center max-w-md mx-auto">
+                                <h4 className="text-lg sm:text-xl font-semibold text-[#ec4899] mb-1">Drop your syllabus files here</h4>
+                                <p className="text-sm text-gray-600 mb-2">Our AI will automatically extract assignment details, deadlines, and course requirements</p>
+                                <div className="text-xs text-gray-500 mb-4 italic">
+                                  This is just a demonstration - no actual file upload is required
+                                </div>
+                                <button className="px-5 py-2 bg-[#ec4899] text-white rounded-full text-sm font-medium cursor-default">
+                                  Browse Files
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {index === 1 && (
+                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
+                            {/* DEMO badge */}
+                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
+                              DEMO UI
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                              {/* Calendar side */}
+                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden">
+                                <div className="bg-[#a855f7]/10 px-4 py-3 flex justify-between items-center border-b border-[#a855f7]/10">
+                                  <h4 className="font-semibold text-[#a855f7]">September 2023</h4>
+                                  <div className="flex gap-2">
+                                    <button className="p-1 rounded hover:bg-[#a855f7]/10 cursor-default">
+                                      <Calendar className="w-4 h-4 text-[#a855f7]" />
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="grid grid-cols-7 gap-1 p-2">
+                                  {['S','M','T','W','T','F','S'].map((day, i) => (
+                                    <div key={`day-${i}`} className="text-xs text-center font-semibold text-gray-500 py-1">
+                                      {day}
+                                    </div>
+                                  ))}
+                                  {Array.from({ length: 30 }).map((_, i) => (
+                                    <div 
+                                      key={i} 
+                                      className={`aspect-square flex flex-col items-center justify-center text-xs rounded-md 
+                                        ${i === 14 ? 'bg-[#a855f7] text-white' : 'hover:bg-[#a855f7]/5'}`}
+                                    >
+                                      <span>{i + 1}</span>
+                                      {i === 14 && <div className="w-1 h-1 bg-white rounded-full mt-0.5"></div>}
+                                      {i === 7 && <div className="w-1 h-1 bg-[#ec4899] rounded-full mt-0.5"></div>}
+                                      {i === 21 && <div className="w-1 h-1 bg-[#11ba82] rounded-full mt-0.5"></div>}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              {/* Class details side */}
+                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden flex flex-col">
+                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10">
+                                  <h4 className="font-semibold text-[#a855f7]">Extracted Classes</h4>
+                                </div>
+                                <div className="p-2 space-y-2 flex-1 overflow-y-auto">
+                                  <div className="rounded-md bg-[#a855f7]/5 p-3 border-l-2 border-[#a855f7]">
+                                    <div className="font-semibold text-[#a855f7] text-sm">CS 101: Intro to Programming</div>
+                                    <div className="text-xs text-gray-600">Prof. Johnson • MWF 9:00-10:30am</div>
+                                    <div className="mt-1 flex gap-1">
+                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">3 Assignments</span>
+                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">2 Exams</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="rounded-md bg-[#ec4899]/5 p-3 border-l-2 border-[#ec4899]">
+                                    <div className="font-semibold text-[#ec4899] text-sm">MATH 201: Calculus II</div>
+                                    <div className="text-xs text-gray-600">Prof. Garcia • TR 11:00-12:30pm</div>
+                                    <div className="mt-1 flex gap-1">
+                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">4 Problem Sets</span>
+                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">3 Exams</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="rounded-md bg-[#11ba82]/5 p-3 border-l-2 border-[#11ba82]">
+                                    <div className="font-semibold text-[#11ba82] text-sm">PHYS 202: Mechanics</div>
+                                    <div className="text-xs text-gray-600">Prof. Smith • MWF 1:00-2:30pm</div>
+                                    <div className="mt-1 flex gap-1">
+                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">5 Labs</span>
+                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">2 Exams</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {index === 2 && (
+                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
+                            {/* DEMO badge */}
+                            <div className="absolute top-3 right-3 bg-gray-100 text-gray-500 text-xs font-bold py-1 px-2 rounded-md border border-gray-200 z-10">
+                              DEMO UI
+                            </div>
+                            <div className="border border-[#11ba82]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden">
+                              <div className="bg-[#11ba82]/10 px-4 py-3 border-b border-[#11ba82]/10">
+                                <h4 className="font-semibold text-[#11ba82]">Upcoming Deadlines</h4>
+                              </div>
+                              <div className="p-4 space-y-3">
+                                <div className="flex items-center gap-3 p-3 rounded-lg bg-[#11ba82]/5 border border-[#11ba82]/10">
+                                  <div className="p-2 bg-[#11ba82]/10 rounded-full">
+                                    <BellRing className="w-5 h-5 text-[#11ba82]" />
+                                  </div>
+                                  <div>
+                                    <div className="font-medium">PHYS 202 Quiz Tomorrow</div>
+                                    <div className="text-xs text-gray-600">10:00 AM - Study chapters 5-7</div>
+                                  </div>
+                                  <div className="ml-auto text-xs text-[#11ba82] font-medium bg-[#11ba82]/10 px-2 py-1 rounded-full">High Priority</div>
+                                </div>
+                                
+                                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                                  <div className="p-2 bg-gray-100 rounded-full">
+                                    <FileText className="w-5 h-5 text-gray-500" />
+                                  </div>
+                                  <div>
+                                    <div className="font-medium">ECON 101 Paper</div>
+                                    <div className="text-xs text-gray-600">Due in 5 days - 40% complete</div>
+                                  </div>
+                                  <div className="ml-auto text-xs text-amber-600 font-medium bg-amber-50 px-2 py-1 rounded-full">Medium</div>
+                                </div>
+                                
+                                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                                  <div className="p-2 bg-gray-100 rounded-full">
+                                    <BookOpen className="w-5 h-5 text-gray-500" />
+                                  </div>
+                                  <div>
+                                    <div className="font-medium">CS 202 Reading</div>
+                                    <div className="text-xs text-gray-600">Due next week - Not started</div>
+                                  </div>
+                                  <div className="ml-auto text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Low</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          ))}
         </motion.div>
 
         <motion.div
@@ -154,29 +314,12 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center mt-10 sm:mt-12 md:mt-14 relative"
+          className="text-center mt-16 sm:mt-20 md:mt-24 relative"
         >
-          {/* Decorative elements around the button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="absolute w-full h-full inset-0 pointer-events-none overflow-hidden"
-          >
-            <div className="absolute top-1/4 -left-8 w-20 h-20 rounded-full bg-gradient-to-br from-[#f8d6bc]/10 to-[#f8d6bc]/5 blur-xl"></div>
-            <div className="absolute bottom-1/3 -right-12 w-24 h-24 rounded-full bg-gradient-to-br from-[#d6bce6]/10 to-[#d6bce6]/5 blur-xl"></div>
-            <div className="absolute top-0 left-1/4 w-1 h-1 rounded-full bg-[#f29c86]/70"></div>
-            <div className="absolute top-1/3 right-1/4 w-2 h-2 rounded-full bg-[#8b5cf6]/60"></div>
-            <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-[#11ba82]/70"></div>
-          </motion.div>
-          
           <button
             onClick={onGetStartedClick}
             className="relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 overflow-hidden font-medium text-white bg-gradient-to-r from-[#11ba82] via-[#0ea371] to-[#0d9868] rounded-full shadow-lg group"
           >
-            <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
-            <span className="absolute -inset-px bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 rounded-full blur-sm transition-opacity duration-300"></span>
             <span className="relative text-base sm:text-lg font-semibold flex items-center gap-2 z-10">
               Get Started Now
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />

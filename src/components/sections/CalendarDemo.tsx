@@ -251,258 +251,260 @@ const CalendarDemo: React.FC = () => {
         Visualize your academic life with intelligent scheduling and reminders
       </motion.p>
       
-      <motion.div
-        variants={itemVariants}
-        className="bg-white rounded-xl sm:rounded-[16px] shadow-md sm:shadow-lg md:shadow-xl overflow-hidden border border-gray-100/60 backdrop-blur-xl relative ring-1 ring-black/5 scale-[0.85] sm:scale-90 md:scale-95 lg:scale-100 origin-top"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-white/95 pointer-events-none z-0"></div>
-        
-        {/* Light glow effect */}
-        <div className="absolute -top-20 -left-20 w-32 sm:w-40 h-32 sm:h-40 bg-[#11ba82]/20 rounded-full blur-[60px] sm:blur-[80px]"></div>
-        <div className="absolute -bottom-20 -right-20 w-32 sm:w-40 h-32 sm:h-40 bg-blue-500/20 rounded-full blur-[60px] sm:blur-[80px]"></div>
-
-        {/* Calendar Header */}
-        <div className="border-b border-gray-100 relative z-10">
-          {/* Top Bar */}
-          <div className="p-2 sm:p-3 flex items-center bg-gray-50/90 backdrop-blur-xl border-b border-gray-200/80">
-            <div className="flex items-center space-x-1 sm:space-x-1.5">
-              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-400 rounded-full"></div>
-              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-400 rounded-full"></div>
-              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full"></div>
-            </div>
-            <div className="flex-1 mx-16 sm:mx-24">
-              <div className="mx-auto max-w-xl sm:max-w-2xl bg-gray-200/70 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-md flex items-center gap-1 border border-gray-200/60">
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400" />
-                  <span className="text-[11px] sm:text-[13px] text-gray-500 font-medium">
-                    https://
+      {/* Container */}
+      <div className="max-w-6xl mx-auto mt-6 sm:mt-8 md:mt-10 relative">
+        {/* Calendar UI */}
+        <motion.div
+          ref={calendarRef}
+          className="relative z-10 border border-gray-200 bg-white rounded-xl shadow-xl max-w-4xl mx-auto overflow-hidden"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          {/* Calendar Header */}
+          <div className="border-b border-gray-100 relative z-10">
+            {/* Top Bar */}
+            <div className="p-2 sm:p-3 flex items-center bg-gray-50/90 backdrop-blur-xl border-b border-gray-200/80">
+              <div className="flex items-center space-x-1 sm:space-x-1.5">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-400 rounded-full"></div>
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-400 rounded-full"></div>
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full"></div>
+              </div>
+              <div className="flex-1 mx-16 sm:mx-24">
+                <div className="mx-auto max-w-xl sm:max-w-2xl bg-gray-200/70 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-md flex items-center gap-1 border border-gray-200/60">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400" />
+                    <span className="text-[11px] sm:text-[13px] text-gray-500 font-medium">
+                      https://
+                    </span>
+                  </div>
+                  <span className="text-[11px] sm:text-[13px] text-gray-500">
+                    {window.location.host}/calendar
                   </span>
                 </div>
-                <span className="text-[11px] sm:text-[13px] text-gray-500">
-                  {window.location.host}/calendar
-                </span>
               </div>
             </div>
-          </div>
 
-          {/* Sub Header */}
-          <div className="p-3 sm:p-4 flex items-center justify-between bg-white/95 backdrop-blur-xl">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-[#11ba82]" />
-              <h2 className="text-base sm:text-lg font-semibold text-gray-900">
-                Ivy AI Dashboard
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-3">
-              <motion.div className="p-1.5 sm:p-2 cursor-pointer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
-              </motion.div>
-              <motion.div className="p-1.5 sm:p-2 cursor-pointer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
-              </motion.div>
-              <motion.div 
-                className="flex items-center gap-1.5 sm:gap-2 bg-[#11ba82] text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold cursor-pointer shadow-md"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              >
-                <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                Add Event
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Navigation Bar */}
-          <div className="px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between border-t border-b border-gray-200/80 bg-white/95 backdrop-blur-xl">
-            <div className="flex items-center gap-3 sm:gap-4">
+            {/* Sub Header */}
+            <div className="p-3 sm:p-4 flex items-center justify-between bg-white/95 backdrop-blur-xl">
               <div className="flex items-center gap-2 sm:gap-3">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
-                  {formatMonthYear(currentDate)}
-                </h3>
-                <div className="text-xs sm:text-sm text-gray-500 font-medium">
-                  Winter Term
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-[#11ba82]" />
+                <h2 className="text-base sm:text-lg font-semibold text-gray-900">
+                  Ivy AI Dashboard
+                </h2>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <motion.div className="p-1.5 sm:p-2 cursor-pointer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                </motion.div>
+                <motion.div className="p-1.5 sm:p-2 cursor-pointer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                </motion.div>
+                <motion.div 
+                  className="flex items-center gap-1.5 sm:gap-2 bg-[#11ba82] text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold cursor-pointer shadow-md"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                  Add Event
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Navigation Bar */}
+            <div className="px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between border-t border-b border-gray-200/80 bg-white/95 backdrop-blur-xl">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
+                    {formatMonthYear(currentDate)}
+                  </h3>
+                  <div className="text-xs sm:text-sm text-gray-500 font-medium">
+                    Winter Term
+                  </div>
+                </div>
+                <div className="flex items-center gap-0.5 sm:gap-1">
+                  <motion.div 
+                    className="p-1 sm:p-1.5 hover:bg-gray-100 rounded-md cursor-pointer"
+                    whileHover={{ scale: 1.1, backgroundColor: "#f1f5f9" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" />
+                  </motion.div>
+                  <motion.div 
+                    className="p-1 sm:p-1.5 hover:bg-gray-100 rounded-md cursor-pointer"
+                    whileHover={{ scale: 1.1, backgroundColor: "#f1f5f9" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" />
+                  </motion.div>
                 </div>
               </div>
-              <div className="flex items-center gap-0.5 sm:gap-1">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <motion.div 
-                  className="p-1 sm:p-1.5 hover:bg-gray-100 rounded-md cursor-pointer"
-                  whileHover={{ scale: 1.1, backgroundColor: "#f1f5f9" }}
-                  whileTap={{ scale: 0.95 }}
+                  className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md hover:bg-gray-100 cursor-pointer"
+                  whileHover={{ backgroundColor: "#f1f5f9", color: "#11ba82" }}
                 >
-                  <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" />
+                  Today
+                </motion.div>
+                <div className="h-3 sm:h-4 w-[1px] bg-gray-300"></div>
+                <motion.div 
+                  className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-gray-100"
+                  whileHover={{ backgroundColor: "#e2f8f0" }}
+                >
+                  Week
                 </motion.div>
                 <motion.div 
-                  className="p-1 sm:p-1.5 hover:bg-gray-100 rounded-md cursor-pointer"
-                  whileHover={{ scale: 1.1, backgroundColor: "#f1f5f9" }}
-                  whileTap={{ scale: 0.95 }}
+                  className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md hover:bg-gray-100 cursor-pointer"
+                  whileHover={{ backgroundColor: "#f1f5f9", color: "#11ba82" }}
                 >
-                  <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400" />
-                </motion.div>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <motion.div 
-                className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md hover:bg-gray-100 cursor-pointer"
-                whileHover={{ backgroundColor: "#f1f5f9", color: "#11ba82" }}
-              >
-                Today
-              </motion.div>
-              <div className="h-3 sm:h-4 w-[1px] bg-gray-300"></div>
-              <motion.div 
-                className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-gray-100"
-                whileHover={{ backgroundColor: "#e2f8f0" }}
-              >
-                Week
-              </motion.div>
-              <motion.div 
-                className="text-xs sm:text-sm text-gray-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md hover:bg-gray-100 cursor-pointer"
-                whileHover={{ backgroundColor: "#f1f5f9", color: "#11ba82" }}
-              >
-                Month
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        {/* Calendar Content */}
-        <div className="flex">
-          {/* Sidebar */}
-          <div className="w-48 sm:w-56 md:w-64 shrink-0 py-4 sm:py-6 px-3 sm:px-4 space-y-4 sm:space-y-6 bg-gray-50/90 backdrop-blur-xl border-r border-gray-200/80 relative z-10">
-            <div className="space-y-2 sm:space-y-3">
-              <h4 className="text-[11px] sm:text-[13px] font-semibold text-gray-900 uppercase tracking-wide px-2">
-                Quick Access
-              </h4>
-              <div className="space-y-0.5 sm:space-y-1">
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <BookOpen className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
-                  <span className="font-medium truncate">Courses</span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <ListTodo className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
-                  <span className="font-medium truncate">Assignments</span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <AlertCircle className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
-                  <span className="font-medium truncate">Quizzes</span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <GraduationCap className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
-                  <span className="font-medium truncate">Exams</span>
-                </motion.div>
-              </div>
-            </div>
-            <div className="h-[1px] bg-gray-200"></div>
-            <div className="space-y-2 sm:space-y-3">
-              <h4 className="text-[11px] sm:text-[13px] font-semibold text-gray-900 uppercase tracking-wide px-2">
-                My Courses
-              </h4>
-              <div className="space-y-0.5 sm:space-y-1">
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-blue-500 shrink-0"></div>
-                  <span className="font-medium truncate">
-                    CS 202 - Data Structures
-                  </span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-purple-500 shrink-0"></div>
-                  <span className="font-medium truncate">
-                    MATH 201 - Calculus II
-                  </span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-green-500 shrink-0"></div>
-                  <span className="font-medium truncate">
-                    PSYC 101 - Intro Psychology
-                  </span>
-                </motion.div>
-                <motion.div 
-                  className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
-                  variants={quickAccessVariants}
-                  whileHover="hover"
-                >
-                  <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-orange-500 shrink-0"></div>
-                  <span className="font-medium truncate">
-                    PHYS 102 - Physics II
-                  </span>
+                  Month
                 </motion.div>
               </div>
             </div>
           </div>
 
-          {/* Calendar Grid */}
-          <div className="flex-1 min-w-0">
-            <FullCalendar
-              ref={calendarRef}
-              plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
-              initialView="timeGridWeek"
-              headerToolbar={false}
-              events={events}
-              eventContent={renderEventContent}
-              allDaySlot={false}
-              slotMinTime="08:00:00"
-              slotMaxTime="18:00:00"
-              expandRows={true}
-              dayHeaderFormat={{ weekday: "short", day: "numeric" }}
-              slotLabelFormat={{
-                hour: "numeric",
-                minute: "2-digit",
-                meridiem: "short",
-              }}
-              nowIndicator={true}
-              initialDate={new Date()}
-              firstDay={1}
-              slotDuration="00:30:00"
-              slotLabelInterval="01:00"
-              eventMinHeight={30}
-              height="auto"
-              eventClassNames="rounded-md sm:rounded-[6px] border-0 shadow-sm hover:shadow-md transition-shadow duration-200"
-              slotLabelClassNames="text-gray-700 text-[10px] sm:text-[13px] font-medium !px-2 sm:!px-3"
-              dayHeaderClassNames="text-gray-700 text-xs sm:text-sm font-medium"
-              slotLaneClassNames="border-gray-200/80"
-              nowIndicatorClassNames="!border-[#11ba82] z-10"
-              editable={true}
-              droppable={true}
-              selectable={true}
-              displayEventEnd={true}
-              eventDisplay="block"
-              eventTimeFormat={{
-                hour: "numeric",
-                minute: "2-digit",
-                meridiem: "short",
-              }}
-            />
+          {/* Calendar Content */}
+          <div className="flex">
+            {/* Sidebar */}
+            <div className="w-48 sm:w-56 md:w-64 shrink-0 py-4 sm:py-6 px-3 sm:px-4 space-y-4 sm:space-y-6 bg-gray-50/90 backdrop-blur-xl border-r border-gray-200/80 relative z-10">
+              <div className="space-y-2 sm:space-y-3">
+                <h4 className="text-[11px] sm:text-[13px] font-semibold text-gray-900 uppercase tracking-wide px-2">
+                  Quick Access
+                </h4>
+                <div className="space-y-0.5 sm:space-y-1">
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <BookOpen className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
+                    <span className="font-medium truncate">Courses</span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <ListTodo className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
+                    <span className="font-medium truncate">Assignments</span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <AlertCircle className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
+                    <span className="font-medium truncate">Quizzes</span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <GraduationCap className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-gray-400" />
+                    <span className="font-medium truncate">Exams</span>
+                  </motion.div>
+                </div>
+              </div>
+              <div className="h-[1px] bg-gray-200"></div>
+              <div className="space-y-2 sm:space-y-3">
+                <h4 className="text-[11px] sm:text-[13px] font-semibold text-gray-900 uppercase tracking-wide px-2">
+                  My Courses
+                </h4>
+                <div className="space-y-0.5 sm:space-y-1">
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-blue-500 shrink-0"></div>
+                    <span className="font-medium truncate">
+                      CS 202 - Data Structures
+                    </span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-purple-500 shrink-0"></div>
+                    <span className="font-medium truncate">
+                      MATH 201 - Calculus II
+                    </span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-green-500 shrink-0"></div>
+                    <span className="font-medium truncate">
+                      PSYC 101 - Intro Psychology
+                    </span>
+                  </motion.div>
+                  <motion.div 
+                    className="w-full flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 text-[12px] sm:text-[14px] text-gray-700 rounded-md cursor-pointer"
+                    variants={quickAccessVariants}
+                    whileHover="hover"
+                  >
+                    <div className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] rounded-full bg-orange-500 shrink-0"></div>
+                    <span className="font-medium truncate">
+                      PHYS 102 - Physics II
+                    </span>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="flex-1 min-w-0">
+              <FullCalendar
+                ref={calendarRef}
+                plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
+                initialView="timeGridWeek"
+                headerToolbar={false}
+                events={events}
+                eventContent={renderEventContent}
+                allDaySlot={false}
+                slotMinTime="08:00:00"
+                slotMaxTime="18:00:00"
+                expandRows={true}
+                dayHeaderFormat={{ weekday: "short", day: "numeric" }}
+                slotLabelFormat={{
+                  hour: "numeric",
+                  minute: "2-digit",
+                  meridiem: "short",
+                }}
+                nowIndicator={true}
+                initialDate={new Date()}
+                firstDay={1}
+                slotDuration="00:30:00"
+                slotLabelInterval="01:00"
+                eventMinHeight={30}
+                height="auto"
+                eventClassNames="rounded-md sm:rounded-[6px] border-0 shadow-sm hover:shadow-md transition-shadow duration-200"
+                slotLabelClassNames="text-gray-700 text-[10px] sm:text-[13px] font-medium !px-2 sm:!px-3"
+                dayHeaderClassNames="text-gray-700 text-xs sm:text-sm font-medium"
+                slotLaneClassNames="border-gray-200/80"
+                nowIndicatorClassNames="!border-[#11ba82] z-10"
+                editable={true}
+                droppable={true}
+                selectable={true}
+                displayEventEnd={true}
+                eventDisplay="block"
+                eventTimeFormat={{
+                  hour: "numeric",
+                  minute: "2-digit",
+                  meridiem: "short",
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </motion.div>
   );
 };

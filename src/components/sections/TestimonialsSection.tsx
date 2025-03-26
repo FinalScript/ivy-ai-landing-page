@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 
 const testimonials = [
@@ -28,7 +28,6 @@ const testimonials = [
 
 const TestimonialsSection: React.FC = () => {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
   
   // Container animation variants
   const containerVariants = {
@@ -37,7 +36,7 @@ const TestimonialsSection: React.FC = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.3,
+        delayChildren: 0.1,
         when: "beforeChildren"
       }
     }
@@ -52,43 +51,60 @@ const TestimonialsSection: React.FC = () => {
       transition: {
         type: "spring",
         damping: 20,
-        stiffness: 100
+        stiffness: 120
       }
     }
   };
   
   return (
-    <section ref={containerRef} className="py-10 sm:py-12 md:py-16 lg:py-20 overflow-hidden relative">
-      {/* Background gradient */}
-      <div className="absolute -top-40 -right-40 w-72 h-72 md:w-96 md:h-96 bg-[#11ba82]/10 rounded-full blur-[80px] md:blur-[100px]"></div>
-      <div className="absolute -bottom-40 -left-40 w-72 h-72 md:w-96 md:h-96 bg-blue-500/10 rounded-full blur-[80px] md:blur-[100px]"></div>
+    <section ref={containerRef} className="py-0 pt-10 sm:pt-12 md:pt-16 lg:pt-20 pb-12 sm:pb-16 md:pb-20 lg:pb-24 bg-white relative">
+      {/* Top wave separator no longer needed */}
       
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-14"
-        >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-            What Students Are Saying
-          </h2>
-          <p className="text-sm xs:text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
+      {/* Background image to the left */}
+      <div className="absolute left-0 top-0 bottom-0 w-1/2 md:w-2/5 lg:w-1/3 overflow-hidden z-0">
+        <img 
+          src="/ivy_studentswalking.jpg" 
+          alt="" 
+          className="h-full w-full object-contain object-left"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white"></div>
+      </div>
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
+          >
+            What Students Are <span className="text-[#11ba82]">Saying</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm xs:text-base sm:text-lg text-gray-700 max-w-2xl mx-auto"
+          >
             Join thousands of students who have transformed their academic life with Ivy AI
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         <motion.div 
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 xs:gap-6 sm:gap-8 scale-[0.9] sm:scale-95 md:scale-100 origin-top mx-auto max-w-md xs:max-w-lg sm:max-w-xl md:max-w-none"
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`bg-white rounded-xl shadow-md sm:shadow-lg md:shadow-xl p-4 sm:p-6 relative ${
+              className={`bg-white rounded-xl shadow-md sm:shadow-lg md:shadow-xl p-4 sm:p-6 relative border border-gray-100 ${
                 index === 1 ? "md:mt-8" : ""
               }`}
             >
@@ -108,6 +124,22 @@ const TestimonialsSection: React.FC = () => {
             </motion.div>
           ))}
         </motion.div>
+      </div>
+      
+      {/* Wave separator */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
+        <svg
+          className="relative block w-full h-[30px] sm:h-[40px] md:h-[50px]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            fill="#ffffff"
+            opacity="1"
+          ></path>
+        </svg>
       </div>
     </section>
   );

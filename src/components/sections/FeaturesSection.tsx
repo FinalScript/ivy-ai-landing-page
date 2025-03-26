@@ -1,52 +1,95 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { CheckCircle2, Bell, List } from "lucide-react";
 
 const FeaturesSection: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
+  const [animationKey, setAnimationKey] = useState(0); // Add state to force re-render of progress bars
   const sectionRef = useRef(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.4, margin: "-50px 0px" });
+  
+  // Only render content when section is in view and activeFeature is set
+  const showContent = isInView && activeFeature !== null;
+  
+  // Function to clear the current interval
+  const clearCurrentInterval = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+  
+  // Function to start a new rotation interval
+  const startNewInterval = useCallback(() => {
+    clearCurrentInterval();
+    
+    intervalRef.current = setInterval(() => {
+      setActiveFeature((current) => {
+        const next = current !== null ? (current + 1) % 3 : 0;
+        setAnimationKey(prevKey => prevKey + 1); // Increment animation key to force re-render
+        return next;
+      });
+    }, 6000);
+  }, [clearCurrentInterval]);
+  
+  // Handle manual feature selection
+  const handleFeatureSelect = useCallback((index: number) => {
+    if (!showContent || activeFeature === index) return;
+    
+    setActiveFeature(index);
+    setAnimationKey(prevKey => prevKey + 1); // Force re-render of progress bar
+    
+    // Restart the interval timer
+    clearCurrentInterval();
+    startNewInterval();
+  }, [showContent, activeFeature, clearCurrentInterval, startNewInterval]);
   
   // Start the auto-rotation only when the section is in view
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
     if (isInView) {
       // Set initial feature only when section comes into view
       setActiveFeature(0);
       
       // Small delay before starting the rotation to ensure the components are visible first
       const timer = setTimeout(() => {
-        interval = setInterval(() => {
-          setActiveFeature((current) => current !== null ? (current + 1) % 3 : 0);
-        }, 6000);
+        startNewInterval();
       }, 500);
       
       return () => {
         clearTimeout(timer);
-        if (interval) clearInterval(interval);
+        clearCurrentInterval();
       };
     }
     
-    return () => {};
-  }, [isInView]);
+    return () => {
+      clearCurrentInterval();
+    };
+  }, [isInView, clearCurrentInterval, startNewInterval]);
+  
+  // Clean up on component unmount
+  useEffect(() => {
+    return () => {
+      clearCurrentInterval();
+    };
+  }, [clearCurrentInterval]);
 
   // Progress bar animation duration (in milliseconds)
   const progressDuration = 6000;
-
-  // Only render content when section is in view and activeFeature is set
-  const showContent = isInView && activeFeature !== null;
 
   return (
     <section 
       ref={sectionRef}
       className="py-10 sm:py-12 md:py-16 lg:py-20 bg-gray-50 relative overflow-hidden"
     >
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-72 h-72 md:w-96 md:h-96 bg-[#11ba82]/10 rounded-full blur-[80px] md:blur-[100px]"></div>
-        <div className="absolute -bottom-40 -left-40 w-72 h-72 md:w-96 md:h-96 bg-blue-500/10 rounded-full blur-[80px] md:blur-[100px]"></div>
+      {/* Subtle pattern background */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div className="absolute inset-0" style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2311ba82' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '60px 60px'
+        }}></div>
       </div>
-
+      
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <motion.h2
@@ -71,7 +114,7 @@ const FeaturesSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
           {/* Feature selector (tabs) */}
           <div className="order-2 lg:order-1">
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg overflow-hidden border border-gray-200/60 scale-[0.9] sm:scale-95 md:scale-100 origin-top">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg md:shadow-xl overflow-hidden border border-gray-100 scale-[0.9] sm:scale-95 md:scale-100 origin-top">
               {/* Feature 1: Priority Manager */}
               <motion.div
                 className={`p-4 sm:p-6 border-l-4 cursor-pointer transition-all duration-300 ${
@@ -79,7 +122,7 @@ const FeaturesSection: React.FC = () => {
                     ? "border-[#11ba82] bg-green-50/50"
                     : "border-transparent hover:bg-gray-50"
                 }`}
-                onClick={() => showContent && setActiveFeature(0)}
+                onClick={() => handleFeatureSelect(0)}
                 whileHover={{ x: showContent && activeFeature === 0 ? 0 : 5 }}
               >
                 <div className="flex items-start gap-3 sm:gap-4">
@@ -104,7 +147,7 @@ const FeaturesSection: React.FC = () => {
                       <motion.div
                         className="h-1 bg-gray-200 rounded-full mt-3 sm:mt-4 overflow-hidden"
                         initial={{ width: "100%" }}
-                        key={`progress-0-${activeFeature}`}
+                        key={`progress-0-${animationKey}`}
                       >
                         <motion.div
                           className="h-full bg-[#11ba82]"
@@ -128,7 +171,7 @@ const FeaturesSection: React.FC = () => {
                     ? "border-[#11ba82] bg-green-50/50"
                     : "border-transparent hover:bg-gray-50"
                 }`}
-                onClick={() => showContent && setActiveFeature(1)}
+                onClick={() => handleFeatureSelect(1)}
                 whileHover={{ x: showContent && activeFeature === 1 ? 0 : 5 }}
               >
                 <div className="flex items-start gap-3 sm:gap-4">
@@ -153,7 +196,7 @@ const FeaturesSection: React.FC = () => {
                       <motion.div
                         className="h-1 bg-gray-200 rounded-full mt-3 sm:mt-4 overflow-hidden"
                         initial={{ width: "100%" }}
-                        key={`progress-1-${activeFeature}`}
+                        key={`progress-1-${animationKey}`}
                       >
                         <motion.div
                           className="h-full bg-[#11ba82]"
@@ -177,7 +220,7 @@ const FeaturesSection: React.FC = () => {
                     ? "border-[#11ba82] bg-green-50/50"
                     : "border-transparent hover:bg-gray-50"
                 }`}
-                onClick={() => showContent && setActiveFeature(2)}
+                onClick={() => handleFeatureSelect(2)}
                 whileHover={{ x: showContent && activeFeature === 2 ? 0 : 5 }}
               >
                 <div className="flex items-start gap-3 sm:gap-4">
@@ -202,7 +245,7 @@ const FeaturesSection: React.FC = () => {
                       <motion.div
                         className="h-1 bg-gray-200 rounded-full mt-3 sm:mt-4 overflow-hidden"
                         initial={{ width: "100%" }}
-                        key={`progress-2-${activeFeature}`}
+                        key={`progress-2-${animationKey}`}
                       >
                         <motion.div
                           className="h-full bg-[#11ba82]"
