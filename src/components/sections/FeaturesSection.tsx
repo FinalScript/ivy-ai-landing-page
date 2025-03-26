@@ -87,7 +87,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
         setAnimationKey(prevKey => prevKey + 1); // Increment animation key to force re-render
         return next;
       });
-    }, 6000);
+    }, progressDuration);
   }, [clearCurrentInterval]);
   
   // Handle manual feature selection
@@ -132,7 +132,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
   }, [clearCurrentInterval]);
 
   // Progress bar animation duration (in milliseconds)
-  const progressDuration = 6000;
+  const progressDuration = 7000;
   
   // Calculate needed scores using our utility function
   const { averageNeeded, assignmentNeeds, message } = calculateNeededScores();
@@ -484,7 +484,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
                           </p>
                           <div className="mt-1.5 sm:mt-2 text-[10px] xs:text-xs text-blue-900 font-medium">
                             2 hours ago
-                          </div>82
+                          </div>
                         </div>
                       </motion.div>
 

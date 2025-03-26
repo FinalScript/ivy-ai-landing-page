@@ -123,10 +123,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
                   ]}
                   className="text-[#11ba82] font-extrabold"
                   staggerFrom={"last"}
-                  initial={{ y: 0 }}
+                  initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   exit={{ y: "-120%" }}
-                  staggerDuration={0.015}
+                  staggerDuration={0.025}
                   splitLevelClassName="overflow-hidden pb-0.5 xs:pb-0.5 sm:pb-1 md:pb-1"
                   transition={{ type: "spring", damping: 25, stiffness: 400 }}
                   rotationInterval={3000}
