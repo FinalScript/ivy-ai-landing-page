@@ -64,7 +64,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
   const [animationKey, setAnimationKey] = useState(0); // Add state to force re-render of progress bars
   const sectionRef = useRef(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.4, margin: "-50px 0px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1, margin: "0px 0px -200px 0px" });
   
   // Only render content when section is in view and activeFeature is set
   const showContent = isInView && activeFeature !== null;
@@ -141,17 +141,21 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
     <section 
       id="features"
       ref={sectionRef}
-      className="py-10 sm:py-12 md:py-16 lg:py-20 bg-gray-50 relative overflow-hidden"
+      className="py-10 sm:py-12 md:py-16 lg:py-20 bg-white relative overflow-hidden"
     >
-      {/* Subtle pattern background */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2311ba82' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px'
-        }}></div>
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0 opacity-50">
+        <img
+          src="/ivy_lecturehall.jpg"
+          alt="Lecture hall background"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
       
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* White gradient fade at the top */}
+      <div className="absolute inset-x-0 top-0 h-64 z-1 bg-gradient-to-b from-white via-white via-95% to-transparent"></div>
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-10">
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

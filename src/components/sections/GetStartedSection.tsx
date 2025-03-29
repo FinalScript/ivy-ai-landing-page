@@ -82,7 +82,7 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
   ];
 
   return (
-    <section id="how-it-works" className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-50">
+    <section id="how-it-works" className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
