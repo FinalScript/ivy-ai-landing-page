@@ -1,435 +1,277 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Upload, Calendar, CheckCircle2, FileText, BookOpen, BellRing } from "lucide-react";
+import {
+  ArrowRight,
+  Upload,
+  Calendar,
+  CheckCircle2,
+  FileText,
+  BookOpen,
+  BellRing,
+  Folder,
+  File,
+  Settings2,
+  Users,
+  ChevronRight,
+  ChevronLeft,
+  ListOrdered
+} from "lucide-react";
 
 interface GetStartedSectionProps {
   onGetStartedClick: () => void;
 }
 
+// Helper component for dashboard-like cards
+const DashboardCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => (
+  <div className={`bg-white rounded-lg shadow-sm border border-gray-100 p-3 ${className}`}>
+    {children}
+  </div>
+);
+
 const GetStartedSection: React.FC<GetStartedSectionProps> = ({
   onGetStartedClick,
 }) => {
-  // Steps animation variants
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
 
-  const stepVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const blockVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        type: "spring",
-        damping: 25,
-        stiffness: 300,
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
       scale: 1,
-      transition: {
-        type: "spring",
-        damping: 25,
-        stiffness: 300,
-        delay: 0.1,
-      },
+      transition: { type: "spring", damping: 25, stiffness: 120 },
     },
   };
 
+  // Define steps with new UI previews matching the dashboard style
   const steps = [
     {
-      number: "01",
       title: "Upload Your Syllabi",
-      description: "Drag & drop your course materials - our AI extracts all critical deadlines automatically",
-      icon: <FileText className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#ec4899]" />,
-      illustration: <Upload className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#ec4899]" />,
-      color: "#ec4899",
-      image: "/upload-syllabi.png",
-      alt: "Syllabus upload interface showing drag & drop area"
+      description: "Effortlessly bring in all your course materials.",
+      icon: <Upload size={20} className="text-blue-500" />, // Main icon for the block
+      gridClass: "md:col-span-1 lg:col-span-2 lg:row-span-1", // Spanning
+      uiPreview: (
+        <div className="w-full h-full bg-gray-50 p-4 rounded-b-lg border-t border-gray-200 flex items-center justify-center">
+          <DashboardCard className="w-full max-w-xs">
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-xs font-semibold text-gray-600">Documents</h4>
+              <Settings2 size={12} className="text-gray-400" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 p-2 bg-gray-100 rounded">
+                <Folder size={14} className="text-blue-500" />
+                <span className="text-xs font-medium text-gray-700">Syllabi</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 rounded hover:bg-gray-50">
+                <File size={14} className="text-gray-400" />
+                <span className="text-xs text-gray-600">CS 202_Syllabus.pdf</span>
+              </div>
+               <div className="flex items-center gap-2 p-2 rounded bg-blue-500/10 border border-blue-500/30">
+                <Upload size={14} className="text-blue-500" />
+                <span className="text-xs font-semibold text-blue-600">Upload New...</span>
+              </div>
+            </div>
+          </DashboardCard>
+        </div>
+      ),
     },
     {
-      number: "02",
       title: "Review Your Schedule",
-      description: "Confirm extracted dates and adjust your personalized academic calendar",
-      icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#a855f7]" />,
-      illustration: <Calendar className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#a855f7]" />,
-      color: "#a855f7",
-      image: "/calendar-view.png",
-      alt: "Calendar interface showing academic schedule with deadlines"
+      description: "Visualize your entire semester at a glance.",
+      icon: <Calendar size={20} className="text-purple-500" />,
+      gridClass: "md:col-span-1 lg:col-span-2 lg:row-span-2", // Spanning
+      uiPreview: (
+        <div className="w-full h-full bg-gray-50 p-4 rounded-b-lg border-t border-gray-200 flex flex-col gap-3">
+          {/* Mini Calendar */}
+          <DashboardCard className="flex-1">
+             <div className="flex justify-between items-center mb-2">
+               <h4 className="text-xs font-semibold text-gray-600">April 2024</h4>
+               <div className="flex gap-1">
+                  <ChevronLeft size={14} className="text-gray-400"/>
+                  <ChevronRight size={14} className="text-gray-400"/>
+               </div>
+             </div>
+             <div className="grid grid-cols-7 gap-1 text-center">
+               {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => <div key={`day-header-${i}`} className="text-[10px] font-medium text-gray-400">{d}</div>)}
+               {Array.from({ length: 14 }).map((_, i) => (
+                 <div key={i} className={`text-xs p-1 rounded aspect-square flex items-center justify-center relative ${
+                    i === 1 ? 'ring-2 ring-blue-500 ring-inset text-blue-600 font-semibold' :
+                    i === 3 ? 'bg-purple-100 text-purple-600 font-semibold' :
+                    i === 6 ? 'bg-green-100 text-green-600' :
+                              'text-gray-500'
+                 }`}>
+                   {i + 1}
+                 </div>
+               ))}
+             </div>
+           </DashboardCard>
+           {/* Mini Course List & Upcoming Dates - Split into two columns */}
+           <DashboardCard className="flex-1 flex flex-col sm:flex-row gap-4">
+              {/* Left Column: My Courses */}
+              <div className="flex-1">
+                <h4 className="text-xs font-semibold text-gray-600 mb-2">My Courses</h4>
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                    <span className="text-xs text-gray-600">CS 202 - Data Structures</span>
+                  </div>
+                   <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                    <span className="text-xs text-gray-600">MATH 101 - Calculus II</span>
+                  </div>
+                   <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span className="text-xs text-gray-600">PSYC 101 - Intro Psych</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+                    <span className="text-xs text-gray-600">PHYS 110 - Mechanics</span>
+                  </div>
+                   <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span className="text-xs text-gray-600">ENGL 105 - Lit Seminar</span>
+                  </div>
+                </div>
+              </div>
+              {/* Right Column: Upcoming Dates */}
+              <div className="flex-1 sm:border-l sm:pl-4 border-gray-100">
+                <h4 className="text-xs font-semibold text-gray-600 mb-2">Upcoming Dates</h4>
+                 <div className="space-y-1.5">
+                    {/* Item for the 4th */}
+                    <div className="flex items-center gap-2 p-1.5 rounded bg-purple-50 border border-purple-100">
+                       <span className="text-[10px] font-semibold text-purple-600 bg-purple-100 px-1 rounded">Apr 4</span>
+                       <span className="text-xs text-gray-700">MATH 101 Midterm</span>
+                    </div>
+                    {/* Item for the 7th */}
+                     <div className="flex items-center gap-2 p-1.5 rounded bg-green-50 border border-green-100">
+                       <span className="text-[10px] font-semibold text-green-600 bg-green-100 px-1 rounded">Apr 7</span>
+                       <span className="text-xs text-gray-700">PSYC 101 Reading Due</span>
+                    </div>
+                 </div>
+              </div>
+           </DashboardCard>
+        </div>
+      ),
     },
     {
-      number: "03",
       title: "Stay On Track",
-      description: "Get smart reminders and visualize your semester with AI-optimized scheduling",
-      icon: <BellRing className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-[#11ba82]" />,
-      illustration: <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#11ba82]" />,
-      color: "#11ba82",
-      image: "/notifications-view.png",
-      alt: "Notification interface showing smart reminders and progress tracking"
-    }
+      description: "Never miss a deadline with smart reminders.",
+      icon: <BellRing size={20} className="text-green-500" />,
+      gridClass: "md:col-span-2 lg:col-span-2 lg:row-span-1", // Spanning
+      uiPreview: (
+        <div className="w-full h-full bg-gray-50 p-4 rounded-b-lg border-t border-gray-200 flex items-center justify-center">
+          <DashboardCard className="w-full max-w-sm">
+             <h4 className="text-xs font-semibold text-gray-600 mb-2">Today's Overview</h4>
+             <div className="space-y-2">
+              <div className="flex items-start gap-2 p-2 rounded bg-red-50 border border-red-100">
+                 <span className="w-2 h-2 mt-1 rounded-full bg-red-500 flex-shrink-0"></span>
+                 <div>
+                    <p className="text-[11px] font-semibold text-red-700">PSYC 101 Assignment</p>
+                    <p className="text-[10px] text-red-600/80">Due tonight at 11:59 PM</p>
+                 </div>
+                 <span className="ml-auto text-[9px] font-bold text-red-600">PRIORITY</span>
+               </div>
+               <div className="flex items-start gap-2 p-2 rounded bg-gray-50">
+                 <ListOrdered size={12} className="text-gray-400 mt-0.5 flex-shrink-0"/>
+                 <div>
+                    <p className="text-xs font-medium text-gray-700">Upcoming: MATH 101 Quiz</p>
+                    <p className="text-[10px] text-gray-500">Due in 3 days</p>
+                 </div>
+               </div>
+             </div>
+             {/* Added Email Notification Info */}
+             <div className="mt-3 pt-2 border-t border-gray-100 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+                  <rect width="20" height="16" x="2" y="4" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+                <span className="text-[10px] text-gray-500">Email notifications enabled</span>
+             </div>
+          </DashboardCard>
+        </div>
+      ),
+    },
   ];
 
   return (
-    <section id="how-it-works" className="py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section id="how-it-works" className="py-20 sm:py-24 md:py-28 lg:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-            How Ivy AI <span className="text-[#11ba82]">Works</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            How Ivy AI <span className="text-[#11ba82]">Streamlines Your Studies</span>
           </h2>
-          <p className="text-sm xs:text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
-            Three simple steps to transform your academic life
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+            Focus on learning, not logistics. Ivy AI automates the tedious parts of managing your academic life.
           </p>
         </motion.div>
 
-        {/* Timeline Steps */}
+        {/* Bento Grid Layout */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          className="space-y-16 sm:space-y-24 md:space-y-32 relative"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(250px,_auto)] lg:auto-rows-[minmax(280px,_auto)]" // Base grid, auto rows
         >
-          {/* Main Timeline Line */}
-          <div className="absolute left-0 md:left-[38px] top-0 bottom-0 w-px bg-gray-200 hidden md:block"></div>
-          
           {steps.map((step, index) => (
-            <div key={index} className="relative">
-              {/* Step indicator */}
-              <div className="flex flex-col md:flex-row items-start">
-                {/* Left side with step number - only visible on md and larger */}
-                <div className="hidden md:flex flex-col items-center relative z-20 mr-10">
-                  <div className="w-[76px] h-[76px] rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
-                    <span className="text-2xl font-bold" style={{ color: step.color }}>{step.number}</span>
-                  </div>
+            <motion.div
+              key={index}
+              variants={blockVariants}
+              className={`bg-neutral-50 rounded-xl shadow-md border border-gray-200/80 overflow-hidden flex flex-col ${step.gridClass || ''}`}
+            >
+              {/* Minimal Text Header */}
+              <div className="p-5 sm:p-6 border-b border-gray-200">
+                <div className="flex items-center gap-3 mb-1.5">
+                   {step.icon} {/* Use the main icon defined */}
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+                    {step.title}
+                  </h3>
                 </div>
-                
-                {/* Right side with content and screenshot */}
-                <div className="flex-1">
-                  <motion.div 
-                    variants={stepVariants}
-                    className="mb-6 sm:mb-8"
-                  >
-                    {/* Mobile step indicator - only visible below md breakpoint */}
-                    <div className="flex items-center mb-4 md:hidden">
-                      <div className="w-[50px] h-[50px] rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center mr-3">
-                        <span className="text-xl font-bold" style={{ color: step.color }}>{step.number}</span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold">
-                        {step.title}
-                      </h3>
-                    </div>
-                    
-                    {/* Desktop heading - only visible on md and larger */}
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 hidden md:block">
-                      {step.title}
-                    </h3>
-                    
-                    <p className="text-sm sm:text-base md:text-lg text-gray-700 max-w-2xl">
-                      {step.description}
-                    </p>
-                  </motion.div>
-                  
-                  {/* App screenshot/mockup */}
-                  <motion.div 
-                    variants={imageVariants}
-                    className="rounded-xl overflow-hidden shadow-xl border border-gray-200 bg-white"
-                  >
-                    {/* Placeholder for image */}
-                    <div className="w-full bg-gray-100 flex items-center justify-center overflow-hidden" style={{ minHeight: index === 0 ? '400px' : '450px' }}>
-                      <div className="w-full h-full bg-white">
-                        {index === 0 && (
-                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            <div className="border-2 border-dashed border-[#ec4899]/30 rounded-lg h-full min-h-[350px] flex flex-col items-center justify-center">
-                              <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-[#ec4899] mb-3" />
-                              <div className="text-center max-w-md mx-auto">
-                                <h4 className="text-lg sm:text-xl font-semibold text-[#ec4899] mb-1">Drop your syllabus files here</h4>
-                                <p className="text-sm text-gray-600 mb-2">Our AI will automatically extract assignment details, deadlines, and course requirements</p>
-                                <div className="text-xs text-gray-500 mb-4 italic">
-                                  This is just a demonstration - no actual file upload is required
-                                </div>
-                                <button className="px-5 py-2 bg-[#ec4899] text-white rounded-full text-sm font-medium cursor-default">
-                                  Browse Files
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {index === 1 && (
-                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            {/* Mobile-specific view with just extracted classes */}
-                            <div className="md:hidden">
-                              {/* Calendar preview for mobile */}
-                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg bg-white overflow-hidden mb-4">
-                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10 flex justify-between items-center">
-                                  <h4 className="font-semibold text-[#a855f7]">March 2025</h4>
-                                  <div className="flex gap-2">
-                                    <button className="p-1 rounded hover:bg-[#a855f7]/10 cursor-default">
-                                      <Calendar className="w-4 h-4 text-[#a855f7]" />
-                                    </button>
-                                  </div>
-                                </div>
-                                <div className="p-3">
-                                  <div className="grid grid-cols-7 gap-1">
-                                    {['S','M','T','W','T','F','S'].map((day, i) => (
-                                      <div key={`day-${i}`} className="text-xs text-center font-semibold text-gray-500 py-1">
-                                        {day}
-                                      </div>
-                                    ))}
-                                    {Array.from({ length: 21 }).map((_, i) => (
-                                      <div 
-                                        key={i} 
-                                        className={`aspect-square flex flex-col items-center justify-center text-xs rounded-md 
-                                          ${i === 14 ? 'bg-[#a855f7] text-white' : i % 7 === 0 || i % 7 === 6 ? 'text-gray-400' : ''}`}
-                                      >
-                                        <span>{i + 1}</span>
-                                        {i === 14 && <div className="w-1 h-1 bg-white rounded-full mt-0.5"></div>}
-                                        {i === 7 && <div className="w-1 h-1 bg-[#ec4899] rounded-full mt-0.5"></div>}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              {/* Extracted Classes only */}
-                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg bg-white overflow-hidden">
-                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10">
-                                  <h4 className="font-semibold text-[#a855f7]">Extracted Classes</h4>
-                                </div>
-                                <div className="p-4 space-y-4 h-full">
-                                  <div className="rounded-md bg-[#a855f7]/5 p-3 border-l-2 border-[#a855f7]">
-                                    <div className="font-semibold text-[#a855f7] text-sm">CS 101: Intro to Programming</div>
-                                    <div className="text-xs text-gray-600 mt-1">Prof. Johnson • MWF 9:00-10:30am</div>
-                                    <div className="mt-2 flex flex-wrap gap-1.5">
-                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">3 Assignments</span>
-                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">2 Exams</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="rounded-md bg-[#ec4899]/5 p-3 border-l-2 border-[#ec4899]">
-                                    <div className="font-semibold text-[#ec4899] text-sm">MATH 201: Calculus II</div>
-                                    <div className="text-xs text-gray-600 mt-1">Prof. Garcia • TR 11:00-12:30pm</div>
-                                    <div className="mt-2 flex flex-wrap gap-1.5">
-                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">4 Problem Sets</span>
-                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">3 Exams</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="rounded-md bg-[#11ba82]/5 p-3 border-l-2 border-[#11ba82]">
-                                    <div className="font-semibold text-[#11ba82] text-sm">PHYS 202: Mechanics</div>
-                                    <div className="text-xs text-gray-600 mt-1">Prof. Smith • MWF 1:00-2:30pm</div>
-                                    <div className="mt-2 flex flex-wrap gap-1.5">
-                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">5 Labs</span>
-                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">2 Exams</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            {/* Desktop full view */}
-                            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-                              {/* Calendar side */}
-                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden">
-                                <div className="bg-[#a855f7]/10 px-4 py-3 flex justify-between items-center border-b border-[#a855f7]/10">
-                                  <h4 className="font-semibold text-[#a855f7]">September 2023</h4>
-                                  <div className="flex gap-2">
-                                    <button className="p-1 rounded hover:bg-[#a855f7]/10 cursor-default">
-                                      <Calendar className="w-4 h-4 text-[#a855f7]" />
-                                    </button>
-                                  </div>
-                                </div>
-                                <div className="grid grid-cols-7 gap-1 p-2">
-                                  {['S','M','T','W','T','F','S'].map((day, i) => (
-                                    <div key={`day-${i}`} className="text-xs text-center font-semibold text-gray-500 py-1">
-                                      {day}
-                                    </div>
-                                  ))}
-                                  {Array.from({ length: 30 }).map((_, i) => (
-                                    <div 
-                                      key={i} 
-                                      className={`aspect-square flex flex-col items-center justify-center text-xs rounded-md 
-                                        ${i === 14 ? 'bg-[#a855f7] text-white' : 'hover:bg-[#a855f7]/5'}`}
-                                    >
-                                      <span>{i + 1}</span>
-                                      {i === 14 && <div className="w-1 h-1 bg-white rounded-full mt-0.5"></div>}
-                                      {i === 7 && <div className="w-1 h-1 bg-[#ec4899] rounded-full mt-0.5"></div>}
-                                      {i === 21 && <div className="w-1 h-1 bg-[#11ba82] rounded-full mt-0.5"></div>}
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                              
-                              {/* Class details side */}
-                              <div className="border border-[#a855f7]/20 shadow-sm rounded-lg h-full bg-white overflow-hidden flex flex-col">
-                                <div className="bg-[#a855f7]/10 px-4 py-3 border-b border-[#a855f7]/10">
-                                  <h4 className="font-semibold text-[#a855f7]">Extracted Classes</h4>
-                                </div>
-                                <div className="p-2 space-y-2 flex-1 overflow-y-auto">
-                                  <div className="rounded-md bg-[#a855f7]/5 p-3 border-l-2 border-[#a855f7]">
-                                    <div className="font-semibold text-[#a855f7] text-sm">CS 101: Intro to Programming</div>
-                                    <div className="text-xs text-gray-600">Prof. Johnson • MWF 9:00-10:30am</div>
-                                    <div className="mt-1 flex gap-1">
-                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">3 Assignments</span>
-                                      <span className="text-xs bg-[#a855f7]/10 text-[#a855f7] px-1.5 py-0.5 rounded">2 Exams</span>
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="rounded-md bg-[#ec4899]/5 p-3 border-l-2 border-[#ec4899]">
-                                    <div className="font-semibold text-[#ec4899] text-sm">MATH 201: Calculus II</div>
-                                    <div className="text-xs text-gray-600">Prof. Garcia • TR 11:00-12:30pm</div>
-                                    <div className="mt-1 flex gap-1">
-                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">4 Problem Sets</span>
-                                      <span className="text-xs bg-[#ec4899]/10 text-[#ec4899] px-1.5 py-0.5 rounded">3 Exams</span>
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="rounded-md bg-[#11ba82]/5 p-3 border-l-2 border-[#11ba82]">
-                                    <div className="font-semibold text-[#11ba82] text-sm">PHYS 202: Mechanics</div>
-                                    <div className="text-xs text-gray-600">Prof. Smith • MWF 1:00-2:30pm</div>
-                                    <div className="mt-1 flex gap-1">
-                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">5 Labs</span>
-                                      <span className="text-xs bg-[#11ba82]/10 text-[#11ba82] px-1.5 py-0.5 rounded">2 Exams</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {index === 2 && (
-                          <div className="w-full h-full bg-white p-4 sm:p-6 relative">
-                            {/* Mobile-specific view */}
-                            <div className="md:hidden">
-                              <div className="border border-[#11ba82]/20 shadow-sm rounded-lg bg-white overflow-hidden min-h-[350px]">
-                                <div className="bg-[#11ba82]/10 px-4 py-3 rounded-t-lg border-b border-[#11ba82]/10 flex justify-between items-center">
-                                  <h4 className="font-semibold text-[#11ba82]">Upcoming Deadlines</h4>
-                                </div>
-                                <div className="p-4 space-y-3">
-                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-[#11ba82]/5 border border-[#11ba82]/10">
-                                    <div className="p-2 bg-[#11ba82]/10 rounded-full">
-                                      <BellRing className="w-5 h-5 text-[#11ba82]" />
-                                    </div>
-                                    <div>
-                                      <div className="font-medium">PHYS 202 Quiz</div>
-                                      <div className="text-xs text-gray-600">Tomorrow</div>
-                                    </div>
-                                    <div className="ml-auto text-xs text-[#11ba82] font-medium bg-[#11ba82]/10 px-2 py-1 rounded-full">High Priority</div>
-                                  </div>
-                                  
-                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
-                                    <div className="p-2 bg-gray-100 rounded-full">
-                                      <FileText className="w-5 h-5 text-gray-500" />
-                                    </div>
-                                    <div>
-                                      <div className="font-medium">ECON 101 Paper</div>
-                                      <div className="text-xs text-gray-600">Due in 5 days</div>
-                                    </div>
-                                    <div className="ml-auto text-xs text-amber-600 font-medium bg-amber-50 px-2 py-1 rounded-full">Medium</div>
-                                  </div>
-                                  
-                                  <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
-                                    <div className="p-2 bg-gray-100 rounded-full">
-                                      <BookOpen className="w-5 h-5 text-gray-500" />
-                                    </div>
-                                    <div>
-                                      <div className="font-medium">CS 202 Reading</div>
-                                      <div className="text-xs text-gray-600">Due next week - Not started</div>
-                                    </div>
-                                    <div className="ml-auto text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Low</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            {/* Desktop view */}
-                            <div className="hidden md:block">
-                              <div className="bg-[#11ba82]/10 px-4 py-3 rounded-t-lg mb-2 flex justify-between items-center">
-                                <h4 className="font-semibold text-[#11ba82]">Upcoming Deadlines</h4>
-                              </div>
-                              <div className="p-4 space-y-3">
-                                <div className="flex items-center gap-3 p-3 rounded-lg bg-[#11ba82]/5 border border-[#11ba82]/10">
-                                  <div className="p-2 bg-[#11ba82]/10 rounded-full">
-                                    <BellRing className="w-5 h-5 text-[#11ba82]" />
-                                  </div>
-                                  <div>
-                                    <div className="font-medium">PHYS 202 Quiz Tomorrow</div>
-                                    <div className="text-xs text-gray-600">10:00 AM - Study chapters 5-7</div>
-                                  </div>
-                                  <div className="ml-auto text-xs text-[#11ba82] font-medium bg-[#11ba82]/10 px-2 py-1 rounded-full">High Priority</div>
-                                </div>
-                                
-                                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
-                                  <div className="p-2 bg-gray-100 rounded-full">
-                                    <FileText className="w-5 h-5 text-gray-500" />
-                                  </div>
-                                  <div>
-                                    <div className="font-medium">ECON 101 Paper</div>
-                                    <div className="text-xs text-gray-600">Due in 5 days - 40% complete</div>
-                                  </div>
-                                  <div className="ml-auto text-xs text-amber-600 font-medium bg-amber-50 px-2 py-1 rounded-full">Medium</div>
-                                </div>
-                                
-                                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
-                                  <div className="p-2 bg-gray-100 rounded-full">
-                                    <BookOpen className="w-5 h-5 text-gray-500" />
-                                  </div>
-                                  <div>
-                                    <div className="font-medium">CS 202 Reading</div>
-                                    <div className="text-xs text-gray-600">Due next week - Not started</div>
-                                  </div>
-                                  <div className="ml-auto text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">Low</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
+                <p className="text-sm text-gray-600">
+                  {step.description}
+                </p>
               </div>
-            </div>
+              {/* UI Preview Area (takes remaining space) */}
+              <div className="flex-grow min-h-0"> {/* flex-grow + min-h-0 needed for flex child */} 
+                {step.uiPreview}
+              </div>
+            </motion.div>
           ))}
         </motion.div>
 
+        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center mt-16 sm:mt-20 md:mt-24 relative"
+          transition={{ duration: 0.5, delay: 0.2 }} // Faster delay
+          className="text-center mt-16 sm:mt-20 md:mt-24"
         >
           <button
             onClick={onGetStartedClick}
-            className="relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 overflow-hidden font-medium text-white bg-gradient-to-r from-[#11ba82] via-[#0ea371] to-[#0d9868] rounded-full shadow-lg group"
+            className="relative inline-flex items-center justify-center px-7 sm:px-8 py-3.5 sm:py-4 overflow-hidden font-medium text-white bg-gradient-to-r from-[#11ba82] via-[#0ea371] to-[#0d9868] rounded-full shadow-lg group hover:shadow-xl transition-shadow duration-300"
           >
             <span className="relative text-base sm:text-lg font-semibold flex items-center gap-2 z-10">
-              Try For Free
+              Get Started For Free
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />
             </span>
           </button>
           <p className="mt-3 sm:mt-4 text-sm text-gray-500">
-            No credit card required
+            No credit card required. Simplify your semester today.
           </p>
         </motion.div>
       </div>

@@ -6,6 +6,7 @@ import FeaturesSection from "../components/sections/FeaturesSection";
 import TestimonialsSection from "../components/sections/TestimonialsSection";
 import GetStartedSection from "../components/sections/GetStartedSection";
 import Footer from "../components/layout/Footer";
+import { AlertTriangle } from 'lucide-react';
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -148,74 +149,96 @@ const CalendarDemoPreview = () => {
             <div className="font-semibold text-xl text-gray-800">April 2024</div>
             <div className="flex space-x-2">
               <button className="p-1.5 rounded-full hover:bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
+                {/* ChevronLeft Icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               </button>
               <button className="p-1.5 rounded-full hover:bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+                 {/* ChevronRight Icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
             </div>
           </div>
           
-          {/* Calendar Header */}
-          <div className="grid grid-cols-7 gap-1 mb-2 text-xs text-center font-medium text-gray-500">
-            <div className="py-1">Sun</div>
-            <div className="py-1">Mon</div>
-            <div className="py-1">Tue</div>
-            <div className="py-1">Wed</div>
-            <div className="py-1">Thu</div>
-            <div className="py-1">Fri</div>
-            <div className="py-1">Sat</div>
+          {/* Calendar Header - Updated Styles */}
+          <div className="grid grid-cols-7 gap-1 mb-2 text-center">
+            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+              <div key={`cal-head-${i}`} className="text-[10px] font-medium text-gray-400 py-1">{d}</div>
+            ))}
           </div>
           
-          {/* Calendar Days - increased height */}
+          {/* Calendar Days - Updated Styles & Structure */}
           <div className="grid grid-cols-7 gap-1 text-sm flex-grow">
-            {/* First row */}
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">26</div>
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">27</div>
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">28</div>
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">29</div>
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">30</div>
-            <div className="p-2 text-gray-400 text-center h-12 flex items-center justify-center">31</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">1</div>
-            
-            {/* Second row */}
-            <div className="p-2 text-center h-12 flex items-center justify-center">2</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">3</div>
-            <div className="h-12 p-0">
-              <div className="h-full flex rounded-md overflow-hidden relative">
-                <div className="w-1/2 bg-blue-200 border-2 border-r-0 border-blue-500 rounded-l-md h-full"></div>
-                <div className="w-1/2 bg-purple-200 border-2 border-l-0 border-purple-500 rounded-r-md h-full"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-medium">4</span>
+            {[...Array(5 * 7)].map((_, index) => {
+              // Calculate day number (simple placeholder logic for demo)
+              const dayOfMonth = index - 4; // Start days offset for April 2024 example
+              const isCurrentMonth = dayOfMonth > 0 && dayOfMonth <= 30;
+              let dayClasses = "text-xs p-1 rounded aspect-square flex flex-col items-center justify-center relative";
+              const dayContent = isCurrentMonth ? dayOfMonth : "";
+              let innerContent = <>{dayContent}</>;
+
+              if (!isCurrentMonth) {
+                dayClasses += " text-gray-300"; // Dim days outside the month
+              } else {
+                 // Apply base styling for current month days
+                 dayClasses += " text-gray-700"; 
+
+                 // --- Conditional Styling --- 
+                 
+                 // 1. Current Day (Day 5 - Moved to Thursday) - Blue Outline + Blue/Purple dots
+                 if (dayOfMonth === 5) { 
+                   dayClasses += " ring-2 ring-blue-500 ring-inset text-blue-600 font-semibold";
+                   innerContent = (
+                     <>
+                       {dayContent}
+                       <div className="flex space-x-0.5 mt-0.5">
+                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                         <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                       </div>
+                     </>
+                   );
+                 }
+                 // 2. Multi-Event Day (Day 4) - Now using Purple/Green dots
+                 else if (dayOfMonth === 4) {
+                   dayClasses += " font-semibold"; // Keep text bold if needed
+                   innerContent = (
+                     <>
+                       {dayContent}
+                       <div className="flex space-x-0.5 mt-0.5">
+                         <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                         <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                       </div>
+                     </>
+                   );
+                 }
+                 // 3. Single Event Highlights (Existing + Added More)
+                 else if (dayOfMonth === 7) {
+                   dayClasses += " bg-green-100 text-green-600";
+                 } else if (dayOfMonth === 10) {
+                   dayClasses += " bg-orange-100 text-orange-600 font-semibold";
+                   // Add priority indicator icon (!)
+                   innerContent = (
+                     <>
+                       {dayContent}
+                       <AlertTriangle size={14} className="absolute top-1 right-1 text-red-500" />
+                     </>
+                   );
+                 } else if (dayOfMonth === 13) {
+                   dayClasses += " bg-purple-100 text-purple-600";
+                 } else if (dayOfMonth === 18) { // Added Highlight
+                   dayClasses += " bg-orange-100 text-orange-600";
+                 } else if (dayOfMonth === 21) { // Added Highlight
+                   dayClasses += " bg-green-100 text-green-600";
+                 } else if (dayOfMonth === 26) { // Added Highlight
+                   dayClasses += " bg-blue-100 text-blue-600";
+                 }
+              }
+
+              return (
+                <div key={`day-${index}`} className={dayClasses}>
+                  {innerContent} {/* Render day number or number + dots */}
                 </div>
-              </div>
-            </div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">5</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">6</div>
-            <div className="p-2 bg-green-50 border border-green-500 rounded-md text-center h-12 flex items-center justify-center">7</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">8</div>
-            
-            {/* Third row with highlighted events */}
-            <div className="p-2 text-center h-12 flex items-center justify-center">9</div>
-            <div className="p-2 bg-orange-50 border border-orange-500 rounded-md text-center h-12 flex items-center justify-center font-medium">10</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">11</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">12</div>
-            <div className="p-2 bg-purple-50 border border-purple-500 rounded-md text-center h-12 flex items-center justify-center">13</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">14</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">15</div>
-            
-            {/* Fourth row */}
-            <div className="p-2 text-center h-12 flex items-center justify-center">16</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">17</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">18</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">19</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">20</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">21</div>
-            <div className="p-2 text-center h-12 flex items-center justify-center">22</div>
+              );
+            })}
           </div>
         </div>
         
@@ -231,9 +254,12 @@ const CalendarDemoPreview = () => {
             </div>
             
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-              <div className="text-xs text-gray-500 uppercase mb-2">PRIORITY</div>
+              <div className="flex items-center gap-1.5 text-xs text-gray-500 uppercase mb-2">
+                <span>PRIORITY</span>
+                <AlertTriangle size={14} className="text-red-500 ml-0.5 self-center relative top-[-0.5px]" />
+              </div>
               <div className="flex items-center space-x-3 mt-1">
-                <div className="w-5 h-5 rounded-full bg-red-500 flex-shrink-0"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
                 <div className="text-sm font-medium">PSYC 101 Assignment</div>
               </div>
               <div className="text-xs text-gray-500 mt-1">Due on the 10th at 11:59 PM</div>

@@ -22,7 +22,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
       <div className="absolute inset-0 z-1 bg-white/20"></div>
       
       {/* Text Content Section */}
-      <div className="relative z-10 pt-16 xs:pt-20 sm:pt-16 md:pt-12 lg:pt-8 min-h-[60vh] xs:min-h-[65vh] md:min-h-[70vh] flex flex-col items-center justify-start px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 min-h-[50vh] xs:min-h-[65vh] md:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryDemoClick }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg sm:text-xl md:text-2xl leading-[1.6] text-[#171919] mb-8 sm:mb-10 md:mb-12 font-semibold max-w-2xl mx-auto text-center [text-shadow:0_1px_1px_rgba(255,255,255,0.7)]"
+          className="text-xs sm:text-md md:text-lg leading-[1.6] text-gray-800 mb-8 sm:mb-10 md:mb-12 font-semibold max-w-lg sm:max-w-lg md:max-w-2xl mx-auto text-center"
         >
           Upload your course outlines and schedules—our AI instantly creates
           a smart calendar that syncs with your favorite calendar apps.

@@ -30,8 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <span className={`text-xl ${scrolled ? 'text-[#11ba82]' : 'text-[#11ba82]'}`}>Ivy</span>
-              <span className={`${scrolled ? 'text-[#171919]' : 'text-[#171919]'}`}>AI</span>
+              <img src="/ivy_logo.png" alt="Ivy AI Logo" className="h-24 w-auto" />
             </motion.div>
           </Link>
 

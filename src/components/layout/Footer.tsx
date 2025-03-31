@@ -8,9 +8,8 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="space-y-4 col-span-1 md:col-span-2">
-            <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-[#11ba82]">Ivy</span>
-              <span className="text-2xl font-bold text-[#171919]">AI</span>
+            <Link to="/" className="inline-block">
+              <img src="/ivy_logo.png" alt="Ivy AI Logo" className="h-24 w-auto" />
             </Link>
             <p className="text-gray-600 leading-relaxed max-w-xs">
               Empowering students with AI-driven organization tools for
