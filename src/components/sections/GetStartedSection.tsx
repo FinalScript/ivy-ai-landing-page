@@ -4,14 +4,10 @@ import {
   ArrowRight,
   Upload,
   Calendar,
-  CheckCircle2,
-  FileText,
-  BookOpen,
   BellRing,
   Folder,
   File,
   Settings2,
-  Users,
   ChevronRight,
   ChevronLeft,
   ListOrdered
@@ -201,17 +197,32 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
   ];
 
   return (
-    <section id="how-it-works" className="py-20 sm:py-24 md:py-28 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section 
+      id="how-it-works" 
+      className="pt-20 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-white relative overflow-hidden scroll-mt-32"
+    >
+      {/* Full Bleed Bottom Background - Adding vertical centering */}
+      <div className="absolute inset-0 z-0 opacity-20 flex items-center justify-center">
+        <img
+          src="/ivy_hiw.png"
+          alt=""
+          className="w-full h-full max-h-[700px] object-cover"
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Main Content Area (remains z-10) */} 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header - Add specific id here for scrolling */}
         <motion.div
+          id="how-it-works-title"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-16 md:mb-20 pt-12 md:pt-16 relative z-20 scroll-mt-32"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900 pt-6">
             How Ivy AI <span className="text-[#11ba82]">Streamlines Your Studies</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
@@ -225,8 +236,12 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(250px,_auto)] lg:auto-rows-[minmax(280px,_auto)]" // Base grid, auto rows
+          className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(250px,_auto)] lg:auto-rows-[minmax(280px,_auto)]" // Added relative z-10
         >
+          {/* Bottom Background for Grid Area - REMOVED from here */}
+          {/* <div className="absolute inset-0 z-0 overflow-hidden rounded-xl" aria-hidden="true"> ... </div> */}
+
+          {/* Grid Items - Remain above background */}
           {steps.map((step, index) => (
             <motion.div
               key={index}

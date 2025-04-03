@@ -7,12 +7,28 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
-  // Function to handle smooth scrolling to anchor
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  // Simple scroll function with fixed offset
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
+    const targetId = e.currentTarget.hash.substring(1);
+    if (targetId) {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        // Get the top of the element relative to the document
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        
+        // Use a fixed offset from the top (100px)
+        const fixedOffset = 100;
+        
+        // Scroll to the position with smooth behavior
+        window.scrollTo({
+          top: targetPosition - fixedOffset,
+          behavior: "smooth"
+        });
+        
+        // Update the URL hash
+        history.pushState(null, "", `#${targetId}`);
+      }
     }
   };
 
@@ -38,7 +54,7 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
           <div className="hidden md:flex items-center space-x-8">
             <motion.a
               href="#features"
-              onClick={(e) => scrollToSection(e, 'features')}
+              onClick={scrollToSection}
               className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
                 scrolled ? 'text-gray-600' : 'text-[#171919]'
               }`}
@@ -48,8 +64,19 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
               Features
             </motion.a>
             <motion.a
-              href="#how-it-works"
-              onClick={(e) => scrollToSection(e, 'how-it-works')}
+              href="#testimonials"
+              onClick={scrollToSection}
+              className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
+                scrolled ? 'text-gray-600' : 'text-[#171919]'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              Testimonials
+            </motion.a>
+            <motion.a
+              href="#how-it-works-title"
+              onClick={scrollToSection}
               className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
                 scrolled ? 'text-gray-600' : 'text-[#171919]'
               }`}
@@ -57,6 +84,17 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               How It Works
+            </motion.a>
+            <motion.a
+              href="#pricing"
+              onClick={scrollToSection}
+              className={`text-[15px] hover:text-[#11ba82] transition-colors font-semibold ${
+                scrolled ? 'text-gray-600' : 'text-[#171919]'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              Pricing
             </motion.a>
           </div>
 
@@ -86,4 +124,4 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled }) => {
   );
 };
 
-export default Navigation; 
+export default Navigation;

@@ -57,7 +57,11 @@ const TestimonialsSection: React.FC = () => {
   };
   
   return (
-    <section ref={containerRef} className="py-0 pt-10 sm:pt-12 md:pt-16 lg:pt-20 pb-12 sm:pb-16 md:pb-20 lg:pb-24 bg-white relative">
+    <section 
+      id="testimonials"
+      ref={containerRef} 
+      className="pt-16 sm:pt-10 md:pt-10 lg:pt-10 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-white relative scroll-mt-32"
+    >
       {/* Top wave separator no longer needed */}
       
       {/* Background image to the left */}

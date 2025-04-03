@@ -5,6 +5,7 @@ import HeroSection from "../components/sections/HeroSection";
 import FeaturesSection from "../components/sections/FeaturesSection";
 import TestimonialsSection from "../components/sections/TestimonialsSection";
 import GetStartedSection from "../components/sections/GetStartedSection";
+import PricingSection from "../components/sections/PricingSection";
 import Footer from "../components/layout/Footer";
 import { AlertTriangle } from 'lucide-react';
 
@@ -49,7 +50,7 @@ function Index() {
 
       {/* Calendar Demo as separate component with negative margin for overlap effect */}
       <div className="relative z-20 mt-[-200px] xs:mt-[-250px] sm:mt-[-300px] lg:mt-[-250px] 2xl:mt-[-300px]">
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pb-10 sm:pb-12 md:pb-14 lg:pb-16">
           <CalendarDemoPreview />
         </div>
       </div>
@@ -62,6 +63,9 @@ function Index() {
 
       {/* Get Started Section */}
       <GetStartedSection onGetStartedClick={handleTryDemoClick} />
+
+      {/* Pricing Section */}
+      <PricingSection />
 
       {/* Footer */}
       <Footer />
@@ -212,16 +216,17 @@ const CalendarDemoPreview = () => {
                  }
                  // 3. Single Event Highlights (Existing + Added More)
                  else if (dayOfMonth === 7) {
+                   // Keep green highlight, Add priority icon
                    dayClasses += " bg-green-100 text-green-600";
-                 } else if (dayOfMonth === 10) {
-                   dayClasses += " bg-orange-100 text-orange-600 font-semibold";
-                   // Add priority indicator icon (!)
                    innerContent = (
                      <>
                        {dayContent}
                        <AlertTriangle size={14} className="absolute top-1 right-1 text-red-500" />
                      </>
                    );
+                 } else if (dayOfMonth === 10) {
+                   // Keep orange highlight, Remove priority icon
+                   dayClasses += " bg-orange-100 text-orange-600";
                  } else if (dayOfMonth === 13) {
                    dayClasses += " bg-purple-100 text-purple-600";
                  } else if (dayOfMonth === 18) { // Added Highlight
@@ -262,7 +267,7 @@ const CalendarDemoPreview = () => {
                 <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
                 <div className="text-sm font-medium">PSYC 101 Assignment</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Due on the 10th at 11:59 PM</div>
+              <div className="text-xs text-gray-500 mt-1">Due on the 7th at 11:59 PM</div>
             </div>
             
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">

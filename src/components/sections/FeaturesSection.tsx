@@ -176,18 +176,58 @@ const features = [
   },
 ];
 
+// Create a separate component for feature items to fix hooks issues
+interface FeatureItemProps {
+  feature: typeof features[0];
+  index: number;
+}
+
+const FeatureItem: React.FC<FeatureItemProps> = ({ feature, index }) => {
+  const featureRef = useRef(null);
+  const isInView = useInView(featureRef, { once: true, amount: 0.3, margin: "-100px 0px" });
+  const isOdd = index % 2 !== 0;
+
+  return (
+    <motion.div
+      ref={featureRef}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className={`flex flex-col ${isOdd ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12 lg:gap-16`}
+    >
+      {/* Text Content */}
+      <div className="md:w-1/2 text-center md:text-left">
+        <div className="inline-flex items-center gap-3 mb-4 bg-gray-100 px-3 py-1 rounded-full">
+          {feature.icon}
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
+            {feature.title}
+          </h3>
+        </div>
+        <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+          {feature.description}
+        </p>
+      </div>
+      {/* UI Preview */}
+      <div className="md:w-1/2 w-full px-4 md:px-0">
+        <div className="relative rounded-xl shadow-xl border border-gray-200/80 bg-neutral-50 p-4 sm:p-6">
+          {feature.uiPreview}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => {
   const sectionRef = useRef(null);
-  // No need for isInView for the whole section if animating items individually
 
   return (
     <section
       id="features"
       ref={sectionRef}
-      className="py-20 sm:py-24 md:py-28 lg:py-32 bg-white relative overflow-hidden"
+      className="pt-16 lg:pt-20 pb-10 sm:pb-12 md:pb-14 lg:pb-16 bg-white relative overflow-hidden scroll-mt-32"
     >
       {/* Background Image - More Subtle */}
-      <div className="absolute inset-0 z-0 opacity-10"> {/* Even more reduced opacity */}
+      <div className="absolute inset-0 z-0 opacity-10">
         <img
           src="/ivy_lecturehall.jpg"
           alt=""
@@ -205,7 +245,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16 md:mb-20 lg:mb-24"
+          className="text-center mb-16 md:mb-20 lg:mb-24 pt-10 md:pt-12 lg:pt-14"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             Everything You Need to <span className="text-[#11ba82]">Succeed</span>
@@ -217,43 +257,9 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onExploreClick }) => 
 
         {/* Alternating Feature Blocks */}
         <div className="space-y-16 md:space-y-24 lg:space-y-32">
-          {features.map((feature, index) => {
-            const isOdd = index % 2 !== 0;
-            const featureRef = useRef(null);
-            const featureInView = useInView(featureRef, { once: true, amount: 0.3, margin: "-100px 0px" });
-
-            return (
-              <motion.div
-                key={index}
-                ref={featureRef}
-                initial={{ opacity: 0, y: 40 }}
-                animate={featureInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className={`flex flex-col ${isOdd ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12 lg:gap-16`}
-              >
-                {/* Text Content */}
-                <div className="md:w-1/2 text-center md:text-left">
-                  <div className="inline-flex items-center gap-3 mb-4 bg-gray-100 px-3 py-1 rounded-full">
-                    {feature.icon}
-                    <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
-                      {feature.title}
-                    </h3>
-                  </div>
-                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-                {/* UI Preview */}
-                <div className="md:w-1/2 w-full px-4 md:px-0">
-                  <div className="relative rounded-xl shadow-xl border border-gray-200/80 bg-neutral-50 p-4 sm:p-6">
-                     {/* Optional: Add browser mock-up frame */}
-                     {/* <div className="absolute top-2 left-2 flex space-x-1.5"> ... </div> */}
-                    {feature.uiPreview}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {features.map((feature, index) => (
+            <FeatureItem key={index} feature={feature} index={index} />
+          ))}
         </div>
 
         {/* CTA Button - Reusing style, adjusted text */}
