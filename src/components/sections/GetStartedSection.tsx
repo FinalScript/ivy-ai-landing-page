@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Transition, type Variants } from "framer-motion";
 import {
   ArrowRight,
   Upload,
@@ -28,7 +28,7 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
   onGetStartedClick,
 }) => {
   // Animation variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -36,13 +36,13 @@ const GetStartedSection: React.FC<GetStartedSectionProps> = ({
     },
   };
 
-  const blockVariants = {
+  const blockVariants: Variants = {
     hidden: { opacity: 0, y: 20, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { type: "spring", damping: 25, stiffness: 120 },
+      transition: { type: "spring", damping: 25, stiffness: 120 } as Transition,
     },
   };
 

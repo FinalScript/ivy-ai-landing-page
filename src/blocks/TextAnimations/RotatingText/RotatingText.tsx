@@ -16,7 +16,6 @@ import {
   Transition,
   type VariantLabels,
   type Target,
-  type AnimationControls,
   type TargetAndTransition,
 } from "framer-motion";
 
@@ -39,7 +38,7 @@ export interface RotatingTextProps
   texts: string[];
   transition?: Transition;
   initial?: boolean | Target | VariantLabels;
-  animate?: boolean | VariantLabels | AnimationControls | TargetAndTransition;
+  animate?: boolean | VariantLabels | TargetAndTransition;
   exit?: Target | VariantLabels;
   animatePresenceMode?: "sync" | "wait";
   animatePresenceInitial?: boolean;
@@ -82,11 +81,11 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
     const [currentTextIndex, setCurrentTextIndex] = useState<number>(0);
 
     const splitIntoCharacters = (text: string): string[] => {
-      if (typeof Intl !== "undefined" && Intl.Segmenter) {
-        const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+      if (typeof Intl !== "undefined" && (Intl as any).Segmenter) {
+        const segmenter = new (Intl as any).Segmenter("en", { granularity: "grapheme" });
         return Array.from(
           segmenter.segment(text),
-          (segment) => segment.segment,
+          (segment: any) => segment.segment,
         );
       }
       return Array.from(text);
@@ -219,7 +218,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
           mode={animatePresenceMode}
           initial={animatePresenceInitial}
         >
-          <motion.div
+          <motion.span
             key={currentTextIndex}
             className={cn(
               splitBy === "lines"
@@ -265,7 +264,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                 </span>
               );
             })}
-          </motion.div>
+          </motion.span>
         </AnimatePresence>
       </motion.span>
     );

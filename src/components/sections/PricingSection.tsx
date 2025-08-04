@@ -29,7 +29,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     title: 'PRO',
-    price: '$5',
+    price: '$15',
     frequency: 'per month',
     description: 'Unlock AI-powered features to optimize your schedule and boost your grades.',
     features: [
@@ -46,7 +46,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     title: 'PREMIUM',
-    price: '$10',
+    price: '$30',
     frequency: 'per month',
     description: 'Access advanced study tools and personalized insights for peak performance.',
     features: [

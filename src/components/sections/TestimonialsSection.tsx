@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, type Transition, type Variants } from "framer-motion";
 import { Quote } from "lucide-react";
 
 const testimonials = [
@@ -30,7 +30,7 @@ const TestimonialsSection: React.FC = () => {
   const containerRef = useRef(null);
   
   // Container animation variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -43,7 +43,7 @@ const TestimonialsSection: React.FC = () => {
   };
   
   // Item animation variants
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
@@ -52,7 +52,7 @@ const TestimonialsSection: React.FC = () => {
         type: "spring",
         damping: 20,
         stiffness: 120
-      }
+      } as Transition
     }
   };
   
